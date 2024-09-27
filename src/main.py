@@ -28,43 +28,45 @@ screen_needs_update = False
 def update_screen(mainloop = False):
     # Päivitetään näyttöä jos kumpikaan ampina on liikkeessä näin ei tule päällikkeäisiä päivityksiä
      
-    if mainloop==False:
-    
-        global screen_needs_update
-        if screen_needs_update:
+    # if mainloop==False:
+        
+    #     global screen_needs_update
+    #     print("Screen needs update ", screen_needs_update)
+    #     if screen_needs_update:
 
-            screen.fill(WHITE)
-            screen.blit(Meri.resized_image, Meri.rect)
-            screen.blit(Saari.resized_image, Saari.rect)
-            screen.blit(Mantere.resized_image, Mantere.rect)
-            screen.blit(Ernesti.resized_image, Ernesti.rect)
-            screen.blit(Kernesti.resized_image, Kernesti.rect)
-            ErnestiApina.draw()
-            ErnestiApinanappi.draw(screen)
+    #         screen.fill(WHITE)
+    #         screen.blit(Meri.resized_image, Meri.rect)
+    #         screen.blit(Saari.resized_image, Saari.rect)
+    #         screen.blit(Mantere.resized_image, Mantere.rect)
+    #         screen.blit(Ernesti.resized_image, Ernesti.rect)
+    #         screen.blit(Kernesti.resized_image, Kernesti.rect)
+    #         ErnestiApina.draw()
+    #         ErnestiApinanappi.draw(screen)
 
-            KernestiApina.draw()
-            KernestiApinanappi.draw(screen)
+    #         KernestiApina.draw()
+    #         KernestiApinanappi.draw(screen)
 
-            # Update the display
-            pygame.display.flip()
-            screen_needs_update = False  # Reset flag after screen update
+    #         # Update the display
+    #         pygame.display.flip()
+    #         screen_needs_update = False  # Reset flag after screen update
     
     # Jos funktiota on kutsuttu pääloopista niin suoritetaan normaalisti
-    else:
-            screen.fill(WHITE)
-            screen.blit(Meri.resized_image, Meri.rect)
-            screen.blit(Saari.resized_image, Saari.rect)
-            screen.blit(Mantere.resized_image, Mantere.rect)
-            screen.blit(Ernesti.resized_image, Ernesti.rect)
-            screen.blit(Kernesti.resized_image, Kernesti.rect)
-            ErnestiApina.draw()
-            ErnestiApinanappi.draw(screen)
+    # else:
+    
+    screen.fill(WHITE)
+    screen.blit(Meri.resized_image, Meri.rect)
+    screen.blit(Saari.resized_image, Saari.rect)
+    screen.blit(Mantere.resized_image, Mantere.rect)
+    screen.blit(Ernesti.resized_image, Ernesti.rect)
+    screen.blit(Kernesti.resized_image, Kernesti.rect)
+    ErnestiApina.draw()
+    ErnestiApinanappi.draw(screen)
 
-            KernestiApina.draw()
-            KernestiApinanappi.draw(screen)
+    KernestiApina.draw()
+    KernestiApinanappi.draw(screen)
 
-            # Update the display
-            pygame.display.flip()
+    # Update the display
+    pygame.display.flip()
 
     clock.tick(60)
 

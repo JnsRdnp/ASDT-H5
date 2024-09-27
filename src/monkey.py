@@ -12,11 +12,10 @@ class Monkey():
 
         self.update_screen_func = update_screen_func  # Store the update function
 
-        self.is_moving = False
 
     def liikuMantereelle(self, valimatka):
         # Apina liikkuu matkan pätkissä että pätkiä tulee sata
-        self.is_moving = True
+
         kilometri = int(valimatka/100)
         for i in range(0,valimatka+5, kilometri):
             self.rect.x += kilometri
@@ -27,18 +26,9 @@ class Monkey():
             else:
                 self.rect.y -= 10
 
-            self.update_screen_func()
             time.sleep(0.05)
-        self.is_moving = False
 
-    def liikuSaarelle(self, valimatka):
-        kilometri = int(valimatka/100)
-        for i in range(0,-valimatka-5,kilometri):
-            self.rect.x -= kilometri
-            print(i)
-            
-            self.update_screen_func()
-            time.sleep(0.05)
+
 
     def draw(self):
         self.screen.blit(self.resized_image, self.rect)
