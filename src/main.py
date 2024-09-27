@@ -1,10 +1,12 @@
 import pygame
 import sys
+import threading
 from background import Background
 from place import Place
 from person import Person
 from monkey import Monkey
 from button import Button
+
 
 # Initialize Pygame
 pygame.init()
@@ -31,13 +33,11 @@ def update_screen():
     screen.blit(Kernesti.resized_image, Kernesti.rect)
     ErnestiApina.draw()
     ErnestiApinanappi.draw(screen)
-
     KernestiApina.draw()
     KernestiApinanappi.draw(screen)
 
     # Update the display
     pygame.display.flip()
-
     clock.tick(60)
 
 
@@ -62,8 +62,9 @@ KernestiApinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+60,25,'Kern
 # Mantereen ja saaren välimatka
 valimatka = Mantere.rect.left-Saari.rect.right 
 
-
-
+# Apinan liikuttelun aloitus eri funktiossa jotta voidaan hyödyntää threadingiä
+def move_monkey(monkey, distance):
+    monkey.liikuMantereelle(valimatka=distance)
 
 # Main game loop
 def main():
@@ -79,11 +80,11 @@ def main():
 
                 if ErnestiApinanappi.button_rect.collidepoint(mouse_pos):
                     # prints current location of mouse
-                    ErnestiApina.liikuMantereelle(valimatka=valimatka)
+                     threading.Thread(target=move_monkey, args=(ErnestiApina, valimatka)).start()
 
                 if KernestiApinanappi.button_rect.collidepoint(mouse_pos):
                     # prints current location of mouse
-                    KernestiApina.liikuMantereelle(valimatka=valimatka)
+                    threading.Thread(target=move_monkey, args=(KernestiApina, valimatka)).start()
 
             if event.type == pygame.QUIT:
                 running = False
