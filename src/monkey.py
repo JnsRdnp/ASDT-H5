@@ -13,14 +13,23 @@ class Monkey():
         self.update_screen_func = update_screen_func  # Store the update function
 
     def liikuMantereelle(self, valimatka):
-        for i in range(0,valimatka+5,5):
-            self.rect.x += 5
-            print(i)
+        # Apina liikkuu matkan pätkissä että pätkiä tulee sata
+
+        kilometri = int(valimatka/100)
+        for i in range(0,valimatka+5, kilometri):
+            self.rect.x += kilometri
+            
             self.update_screen_func()
+            time.sleep(0.05)
 
     def liikuSaarelle(self, valimatka):
-        for i in range(0,-valimatka-5,-5):
+        kilometri = int(valimatka/100)
+        for i in range(0,-valimatka-5,kilometri):
+            self.rect.x -= kilometri
             print(i)
+            
+            self.update_screen_func()
+            time.sleep(0.05)
 
     def draw(self):
         self.screen.blit(self.resized_image, self.rect)

@@ -29,8 +29,8 @@ def update_screen():
     screen.blit(Mantere.resized_image, Mantere.rect)
     screen.blit(Ernesti.resized_image, Ernesti.rect)
     screen.blit(Kernesti.resized_image, Kernesti.rect)
-    Apina.draw()
-    Apinanappi.draw(screen)
+    ErnestiApina.draw()
+    ErnestiApinanappi.draw(screen)
 
     # Update the display
     pygame.display.flip()
@@ -47,11 +47,10 @@ Mantere = Place(image_file = "./assets/mantere.png", width = 200, height = 400 ,
 Ernesti = Person(image_file = "./assets/erne.png", width = 50, height = 75, location = [Saari.rect.right-65, Saari.rect.top + 85])
 Kernesti = Person(image_file = "./assets/kerne.png", width = 50, height = 75, location = [Saari.rect.right-65, Saari.rect.bottom - 85])
 
-Apina = Monkey(image_file = "./assets/apina.png", width = 50, height = 75, location = [Saari.rect.right-10, Saari.rect.bottom - 85],
+ErnestiApina = Monkey(image_file = "./assets/apina.png", width = 50, height = 75, location = [Ernesti.rect.centerx+10, Ernesti.rect.top],
                screen=screen, update_screen_func=update_screen)
 
-
-Apinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+10,25,'APINA')
+ErnestiApinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+10,25,'Ernesti Apina')
 
 # Mantereen ja saaren välimatka
 valimatka = Mantere.rect.left-Saari.rect.right 
@@ -65,15 +64,15 @@ def main():
     while running:
         for event in pygame.event.get():
 
-            # Apina.liikuMantereelle(valimatka)
+            # ErnestiApina.liikuMantereelle(valimatka)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = event.pos  # gets mouse position
 
                 # checks if mouse position is over the button
 
-                if Apinanappi.button_rect.collidepoint(mouse_pos):
+                if ErnestiApinanappi.button_rect.collidepoint(mouse_pos):
                     # prints current location of mouse
-                    Apina.liikuMantereelle(valimatka=valimatka)
+                    ErnestiApina.liikuMantereelle(valimatka=valimatka)
 
             if event.type == pygame.QUIT:
                 running = False
