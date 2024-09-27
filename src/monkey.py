@@ -2,8 +2,8 @@ import pygame
 import time
 
 class Monkey():
-    def __init__(self, image_file, width, height , location, screen, update_screen_func):
-        pygame.sprite.Sprite.__init__(self)  #call Sprite initializer
+    def __init__(self, image_file, width, height , location, screen, update_screen_func, sana=""):
+        pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(image_file)
         self.resized_image = pygame.transform.scale(self.image,(width, height))
         self.screen = screen
@@ -12,23 +12,38 @@ class Monkey():
 
         self.update_screen_func = update_screen_func  # Store the update function
 
+        self.apina_mantereella = False
+
+        # Hätäviestin sana apinalle näkymään
+        self.text = sana
+        self.my_font = pygame.font.SysFont('Comic Sans MS', 17)
+        self.text_surface = self.my_font.render(self.text, False, (0, 0, 0))
+
 
     def liikuMantereelle(self, valimatka):
-        # Apina liikkuu matkan pätkissä että pätkiä tulee sata
 
-        kilometri = int(valimatka/100)
-        for i in range(0,valimatka+5, kilometri):
-            self.rect.x += kilometri
+        kilometri = valimatka / 100  # Lasketaan yhden kilometrin määrä näytöllä
+
+        for step in range(100):
+            self.rect.x += kilometri  # Liikutaan yksi kilometri kerallaan sata kertaa
             
+            print(step)
+
             # Uimisen liikettä :D
-            if i%10 != 0:
+            if step % 2 != 0:
                 self.rect.y += 10
             else:
                 self.rect.y -= 10
 
             time.sleep(0.05)
 
+        print("Apina pääsi maihin!")
+        self.apina_mantereella = True
+                
+        
 
 
-    def draw(self):
+
+    def draw(self,screen):
         self.screen.blit(self.resized_image, self.rect)
+        screen.blit(self.text_surface, (self.rect.left, self.rect.bottom+5))

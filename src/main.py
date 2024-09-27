@@ -26,32 +26,7 @@ clock = pygame.time.Clock()
 screen_needs_update = False
 
 def update_screen():
-    # Päivitetään näyttöä jos kumpikaan ampina on liikkeessä näin ei tule päällikkeäisiä päivityksiä
-     
-    # if mainloop==False:
-        
-    #     global screen_needs_update
-    #     print("Screen needs update ", screen_needs_update)
-    #     if screen_needs_update:
 
-    #         screen.fill(WHITE)
-    #         screen.blit(Meri.resized_image, Meri.rect)
-    #         screen.blit(Saari.resized_image, Saari.rect)
-    #         screen.blit(Mantere.resized_image, Mantere.rect)
-    #         screen.blit(Ernesti.resized_image, Ernesti.rect)
-    #         screen.blit(Kernesti.resized_image, Kernesti.rect)
-    #         ErnestiApina.draw()
-    #         ErnestiApinanappi.draw(screen)
-
-    #         KernestiApina.draw()
-    #         KernestiApinanappi.draw(screen)
-
-    #         # Update the display
-    #         pygame.display.flip()
-    #         screen_needs_update = False  # Reset flag after screen update
-    
-    # Jos funktiota on kutsuttu pääloopista niin suoritetaan normaalisti
-    # else:
 
     screen.fill(WHITE)
     screen.blit(Meri.resized_image, Meri.rect)
@@ -59,11 +34,11 @@ def update_screen():
     screen.blit(Mantere.resized_image, Mantere.rect)
     screen.blit(Ernesti.resized_image, Ernesti.rect)
     screen.blit(Kernesti.resized_image, Kernesti.rect)
-    ErnestiApina.draw()
+    ErnestiApina.draw(screen)
     ErnestiApinanappi.draw(screen)
     ErnestiApinanappi10.draw(screen)
 
-    KernestiApina.draw()
+    KernestiApina.draw(screen)
     KernestiApinanappi.draw(screen)
     KernestiApinanappi10.draw(screen)
 
@@ -93,11 +68,17 @@ KernestiApinanappi10 = Button(BLACK, KernestiApinanappi.button_rect.right+10,Mer
 
 
 # Mantereen ja saaren välimatka
-valimatka = Mantere.rect.left-Saari.rect.right 
+valimatka = (Mantere.rect.left)-Saari.rect.right
 
 # Apinan liikuttelun aloitus eri funktiossa jotta voidaan hyödyntää threadingiä
 def move_monkey(monkey, distance):
     monkey.liikuMantereelle(valimatka=distance)
+
+def teach_and_send_10_monkeys(distance):
+    print("Teaching monkeys", distance)
+    monkey_list = []
+    hatasanoma_list = ("Tulee", "ärpeegeetä", "tuuksie", "helppaa", "huomen", "vai", "tänää", "v**tu", "mie", "kuolen")
+
 
 # Main game loop
 def main():
@@ -114,10 +95,15 @@ def main():
                 if ErnestiApinanappi.button_rect.collidepoint(mouse_pos):
                     # prints current location of mouse
                      threading.Thread(target=move_monkey, args=(ErnestiApina, valimatka)).start()
+                
+                if ErnestiApinanappi10.button_rect.collidepoint(mouse_pos):
+                    threading.Thread(target=teach_and_send_10_monkeys, args=(valimatka)).start()
 
                 if KernestiApinanappi.button_rect.collidepoint(mouse_pos):
                     # prints current location of mouse
                     threading.Thread(target=move_monkey, args=(KernestiApina, valimatka)).start()
+
+                
 
             if event.type == pygame.QUIT:
                 running = False
