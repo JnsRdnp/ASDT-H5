@@ -53,31 +53,46 @@ Meri = Background(image_file = "./assets/meri.png", location = [0,0])
 Saari = Place(image_file = "./assets/saari.png", width = 300,height = 400 ,location = [0,-5])
 Mantere = Place(image_file = "./assets/mantere.png", width = 200, height = 400 , location = [WIDTH-185,10])
 
-
+# Ernesti ja sen apinat
 Ernesti = Person(image_file = "./assets/erne.png", width = 50, height = 75, location = [Saari.rect.right-65, Saari.rect.top + 85])
-ErnestiApina = Monkey(image_file = "./assets/apina.png", width = 50, height = 75, location = [Ernesti.rect.centerx+10, Ernesti.rect.top],
-               screen=screen, update_screen_func=update_screen)
+
+ErnestinApinoidenStart  = [Ernesti.rect.centerx+10, Ernesti.rect.top]
+ErnestiApina = Monkey(location = ErnestinApinoidenStart, screen=screen)
+
 ErnestiApinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+10,25,'Ernesti Apina')
 ErnestiApinanappi10 = Button(BLACK, ErnestiApinanappi.button_rect.right+10,Meri.rect.bottom+10,25,'10x')
 
+
+# Kernesti ja sen apinat
 Kernesti = Person(image_file = "./assets/kerne.png", width = 50, height = 75, location = [Saari.rect.right-65, Saari.rect.bottom - 85])
-KernestiApina = Monkey(image_file = "./assets/apina.png", width = 50, height = 75, location = [Kernesti.rect.centerx+10, Kernesti.rect.top],
-               screen=screen, update_screen_func=update_screen)
+
+KernestinApinoidenStart  = [Kernesti.rect.centerx+10, Kernesti.rect.top]
+KernestiApina = Monkey(location=KernestinApinoidenStart, screen=screen)
+ 
 KernestiApinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+60,25,'Kernesti Apina')
 KernestiApinanappi10 = Button(BLACK, KernestiApinanappi.button_rect.right+10,Meri.rect.bottom+60,25,'10x')
 
 
 # Mantereen ja saaren välimatka
 valimatka = (Mantere.rect.left)-Saari.rect.right
+hatasanoma_list = ["Tulee", "ärpeegeetä", "tuuksie", "helppaa", "huomen", "vai", "tänää", "v**tu", "mie", "kuolen"]
+
+# Luodaan apinat dynaamiseesti niin että niiden nimi on hätäsanoma ja ne osaavat sen myös
+def create_monkeys(start=[]):
+    monkeys = {}
+
+    for i in range(10):
+        sana = hatasanoma_list[i]  # Haetaan hatasanomasta yksi sana
+        monkeys[f"monkey_{i+1}"] = Monkey(location=start, screen=screen ,sana=sana)  # Create an instance and store it
+
+    return monkeys
+
 
 # Apinan liikuttelun aloitus eri funktiossa jotta voidaan hyödyntää threadingiä
 def move_monkey(monkey, distance):
     monkey.liikuMantereelle(valimatka=distance)
 
-def teach_and_send_10_monkeys(distance):
-    print("Teaching monkeys", distance)
-    monkey_list = []
-    hatasanoma_list = ("Tulee", "ärpeegeetä", "tuuksie", "helppaa", "huomen", "vai", "tänää", "v**tu", "mie", "kuolen")
+    
 
 
 # Main game loop
@@ -97,7 +112,7 @@ def main():
                      threading.Thread(target=move_monkey, args=(ErnestiApina, valimatka)).start()
                 
                 if ErnestiApinanappi10.button_rect.collidepoint(mouse_pos):
-                    threading.Thread(target=teach_and_send_10_monkeys, args=(valimatka)).start()
+                    print(create_monkeys(ErnestinApinoidenStart))
 
                 if KernestiApinanappi.button_rect.collidepoint(mouse_pos):
                     # prints current location of mouse

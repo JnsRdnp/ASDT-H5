@@ -2,15 +2,14 @@ import pygame
 import time
 
 class Monkey():
-    def __init__(self, image_file, width, height , location, screen, update_screen_func, sana=""):
+    def __init__(self, location, screen, sana=""):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(image_file)
-        self.resized_image = pygame.transform.scale(self.image,(width, height))
+        self.image = pygame.image.load("./assets/apina.png")
+        self.resized_image = pygame.transform.scale(self.image,(50, 75))
         self.screen = screen
         self.rect = self.resized_image.get_rect()
         self.rect.x, self.rect.y = location
 
-        self.update_screen_func = update_screen_func  # Store the update function
 
         self.apina_mantereella = False
 
