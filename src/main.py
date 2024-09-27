@@ -19,8 +19,8 @@ Meri = Background(image_file = "./assets/meri.png", location = [0,0])
 Saari = Place(image_file = "./assets/saari.png", width = 200,height = 400 ,location = [0,-5])
 Mantere = Place(image_file = "./assets/mantere.png", width = 200, height = 400 , location = [WIDTH-200,10])
 
-Ernesti = Person(image_file = "./assets/erne.png", width = 50, height = 75, initial_x = Saari.rect.right-50, initial_y = Saari.rect.top + 85)
-Kernesti = Person(image_file = "./assets/kerne.png", width = 50, height = 75, initial_x = Saari.rect.right-50, initial_y = Saari.rect.bottom - 85)
+Ernesti = Person(image_file = "./assets/erne.png", width = 50, height = 75, location = [Saari.rect.right-50, Saari.rect.top + 85])
+Kernesti = Person(image_file = "./assets/kerne.png", width = 50, height = 75, location = [Saari.rect.right-50, Saari.rect.bottom - 85])
 
 
 # Set up the clock for controlling frame rate
