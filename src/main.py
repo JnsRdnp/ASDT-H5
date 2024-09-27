@@ -1,5 +1,6 @@
 import pygame
 import sys
+from background import Background
 
 # Initialize Pygame
 pygame.init()
@@ -8,6 +9,9 @@ pygame.init()
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("My Game")
+
+Meri = Background("./assets/meri.png", [0,0])
+
 
 # Set up the clock for controlling frame rate
 clock = pygame.time.Clock()
@@ -28,8 +32,10 @@ def main():
 
         # Fill the screen with a background color
         screen.fill(WHITE)
+        screen.blit(Meri.image, Meri.rect)
 
         # Drawing code goes here
+        
 
         # Update the display
         pygame.display.flip()
@@ -39,6 +45,7 @@ def main():
 
     pygame.quit()
     sys.exit()
+
 
 if __name__ == "__main__":
     main()
