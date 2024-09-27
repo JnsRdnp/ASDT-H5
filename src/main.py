@@ -23,24 +23,50 @@ BLACK = (0, 0, 0)
 # Set up the clock for controlling frame rate
 clock = pygame.time.Clock()
 
-def update_screen():
-    """Redraw everything on the screen."""
-    screen.fill(WHITE)
-    screen.blit(Meri.resized_image, Meri.rect)
-    screen.blit(Saari.resized_image, Saari.rect)
-    screen.blit(Mantere.resized_image, Mantere.rect)
-    screen.blit(Ernesti.resized_image, Ernesti.rect)
-    screen.blit(Kernesti.resized_image, Kernesti.rect)
+screen_needs_update = False
 
-    ErnestiApina.draw()
-    ErnestiApinanappi.draw(screen)
-    KernestiApina.draw()
-    KernestiApinanappi.draw(screen)
+def update_screen(mainloop = False):
+    # Päivitetään näyttöä jos kumpikaan ampina on liikkeessä näin ei tule päällikkeäisiä päivityksiä
+     
+    if mainloop==False:
+    
+        global screen_needs_update
+        if screen_needs_update:
 
-    # Update the display
-    pygame.display.flip()
-    clock.tick(30)
+            screen.fill(WHITE)
+            screen.blit(Meri.resized_image, Meri.rect)
+            screen.blit(Saari.resized_image, Saari.rect)
+            screen.blit(Mantere.resized_image, Mantere.rect)
+            screen.blit(Ernesti.resized_image, Ernesti.rect)
+            screen.blit(Kernesti.resized_image, Kernesti.rect)
+            ErnestiApina.draw()
+            ErnestiApinanappi.draw(screen)
 
+            KernestiApina.draw()
+            KernestiApinanappi.draw(screen)
+
+            # Update the display
+            pygame.display.flip()
+            screen_needs_update = False  # Reset flag after screen update
+    
+    # Jos funktiota on kutsuttu pääloopista niin suoritetaan normaalisti
+    else:
+            screen.fill(WHITE)
+            screen.blit(Meri.resized_image, Meri.rect)
+            screen.blit(Saari.resized_image, Saari.rect)
+            screen.blit(Mantere.resized_image, Mantere.rect)
+            screen.blit(Ernesti.resized_image, Ernesti.rect)
+            screen.blit(Kernesti.resized_image, Kernesti.rect)
+            ErnestiApina.draw()
+            ErnestiApinanappi.draw(screen)
+
+            KernestiApina.draw()
+            KernestiApinanappi.draw(screen)
+
+            # Update the display
+            pygame.display.flip()
+
+    clock.tick(60)
 
 # Init sprites
 Meri = Background(image_file = "./assets/meri.png", location = [0,0])
@@ -93,7 +119,7 @@ def main():
                 running = False
 
 
-        update_screen()
+        update_screen(mainloop=True)
         
 
     pygame.quit()
