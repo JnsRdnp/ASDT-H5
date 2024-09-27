@@ -4,6 +4,7 @@ from background import Background
 from place import Place
 from person import Person
 from monkey import Monkey
+from button import Button
 
 # Initialize Pygame
 pygame.init()
@@ -13,6 +14,9 @@ WIDTH, HEIGHT = 1000, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("My Game")
 
+# Define some colors
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
 
 # Init sprites
 Meri = Background(image_file = "./assets/meri.png", location = [0,0])
@@ -25,24 +29,27 @@ Kernesti = Person(image_file = "./assets/kerne.png", width = 50, height = 75, lo
 
 Apina = Monkey(image_file = "./assets/apina.png", width = 50, height = 75, location = [Saari.rect.right-10, Saari.rect.bottom - 85])
 
-print('Matka pikseleinä: ', Mantere.rect.left-Saari.rect.right)
+Apinanappi = Button(BLACK,Meri.rect.left+20,Meri.rect.bottom+10,150,30,'Apina')
+
+# Mantereen ja saaren välimatka
+valimatka = Mantere.rect.left-Saari.rect.right 
+
 
 # Set up the clock for controlling frame rate
 clock = pygame.time.Clock()
 
-# Define some colors
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
 
 # Main game loop
 def main():
     running = True
     while running:
         for event in pygame.event.get():
+
+            # Apina.liikuMantereelle(valimatka)
+
             if event.type == pygame.QUIT:
                 running = False
 
-        # Game logic goes here
 
         # Background setup
         screen.fill(WHITE)
@@ -61,7 +68,7 @@ def main():
 
 
         # Drawing code goes here
-
+        Apinanappi.draw(screen)
 
         # Update the display
         pygame.display.flip()
