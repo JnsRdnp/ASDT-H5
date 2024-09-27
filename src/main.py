@@ -18,6 +18,26 @@ pygame.display.set_caption("My Game")
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
+# Set up the clock for controlling frame rate
+clock = pygame.time.Clock()
+
+def update_screen():
+    """Redraw everything on the screen."""
+    screen.fill(WHITE)
+    screen.blit(Meri.resized_image, Meri.rect)
+    screen.blit(Saari.resized_image, Saari.rect)
+    screen.blit(Mantere.resized_image, Mantere.rect)
+    screen.blit(Ernesti.resized_image, Ernesti.rect)
+    screen.blit(Kernesti.resized_image, Kernesti.rect)
+    Apina.draw()
+    Apinanappi.draw(screen)
+
+    # Update the display
+    pygame.display.flip()
+
+    clock.tick(60)
+
+
 # Init sprites
 Meri = Background(image_file = "./assets/meri.png", location = [0,0])
 
@@ -27,7 +47,9 @@ Mantere = Place(image_file = "./assets/mantere.png", width = 200, height = 400 ,
 Ernesti = Person(image_file = "./assets/erne.png", width = 50, height = 75, location = [Saari.rect.right-65, Saari.rect.top + 85])
 Kernesti = Person(image_file = "./assets/kerne.png", width = 50, height = 75, location = [Saari.rect.right-65, Saari.rect.bottom - 85])
 
-Apina = Monkey(image_file = "./assets/apina.png", width = 50, height = 75, location = [Saari.rect.right-10, Saari.rect.bottom - 85])
+Apina = Monkey(image_file = "./assets/apina.png", width = 50, height = 75, location = [Saari.rect.right-10, Saari.rect.bottom - 85],
+               screen=screen, update_screen_func=update_screen)
+
 
 Apinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+10,25,'APINA')
 
@@ -35,8 +57,6 @@ Apinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+10,25,'APINA')
 valimatka = Mantere.rect.left-Saari.rect.right 
 
 
-# Set up the clock for controlling frame rate
-clock = pygame.time.Clock()
 
 
 # Main game loop
@@ -46,35 +66,21 @@ def main():
         for event in pygame.event.get():
 
             # Apina.liikuMantereelle(valimatka)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = event.pos  # gets mouse position
+
+                # checks if mouse position is over the button
+
+                if Apinanappi.button_rect.collidepoint(mouse_pos):
+                    # prints current location of mouse
+                    Apina.liikuMantereelle(valimatka=valimatka)
 
             if event.type == pygame.QUIT:
                 running = False
 
 
-        # Background setup
-        screen.fill(WHITE)
-        screen.blit(Meri.resized_image, Meri.rect)
-
-        # Saari ja manner setup
-        screen.blit(Saari.resized_image, Saari.rect)    
-        screen.blit(Mantere.resized_image, Mantere.rect)    
-
-        # Ihmiset setup
-        screen.blit(Ernesti.resized_image, Ernesti.rect)
-        screen.blit(Kernesti.resized_image, Kernesti.rect)
-
-        # Apinat setup
-        screen.blit(Apina.resized_image, Apina.rect)
-
-
-        # Drawing code goes here
-        Apinanappi.draw(screen)
-
-        # Update the display
-        pygame.display.flip()
-
-        # Cap the frame rate at 60 frames per second
-        clock.tick(60)
+        update_screen()
+        
 
     pygame.quit()
     sys.exit()

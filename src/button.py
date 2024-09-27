@@ -15,11 +15,8 @@ class Button():
 
         self.text = text
 
-        
-        self.my_font = pygame.font.SysFont('Comic Sans MS', fontsize)
-        
 
-        # Numeron pyöristys https://stackoverflow.com/questions/2356501/how-do-you-round-up-a-number
+        self.my_font = pygame.font.SysFont('Comic Sans MS', fontsize)
 
         self.text_surface = self.my_font.render(self.text, False, (255, 255, 255))
 
@@ -33,3 +30,6 @@ class Button():
 
         pygame.draw.rect(screen, self.color, self.button_rect, border_radius=5)
         screen.blit(self.text_surface, (self.button_rect.left+5, self.button_rect.top))
+
+    def onClick(self):
+        print("Nappia painettiin")
