@@ -10,5 +10,3 @@ class Place(pygame.sprite.Sprite):
         self.rect = self.resized_image.get_rect()
         self.rect.left, self.rect.top = location     
 
-        self.x_pos = 0
-        self.y_pos = 0

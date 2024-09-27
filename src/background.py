@@ -1,5 +1,8 @@
 import pygame
 
+# background image in pygame
+# -> https://stackoverflow.com/questions/28005641/how-to-add-a-background-image-into-pygame
+
 class Background(pygame.sprite.Sprite):
 
     def __init__(self, image_file, location):
@@ -8,7 +11,7 @@ class Background(pygame.sprite.Sprite):
         self.resized_image = pygame.transform.scale(self.image,(800,450))
 
         self.rect = self.resized_image.get_rect()
+        print(self.rect)
         self.rect.left, self.rect.top = location
 
-        print(location)
 

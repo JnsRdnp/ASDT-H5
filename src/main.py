@@ -2,6 +2,7 @@ import pygame
 import sys
 from background import Background
 from place import Place
+from person import Person
 
 # Initialize Pygame
 pygame.init()
@@ -16,6 +17,8 @@ pygame.display.set_caption("My Game")
 Meri = Background("./assets/meri.png", [0,0])
 Saari = Place("./assets/saari.png", 200, 400 ,[0,-5])
 Mantere = Place("./assets/mantere.png", 200, 400 ,[WIDTH-200,10])
+Ernesti = Person("./assets/erne.png", 50, 75, Saari.rect.right-50, Saari.rect.top + 85)
+Kernesti = Person("./assets/kerne.png", 50, 75, Saari.rect.right-50, Saari.rect.bottom - 85)
 
 
 # Set up the clock for controlling frame rate
@@ -42,6 +45,10 @@ def main():
         # Saari ja manner setup
         screen.blit(Saari.resized_image, Saari.rect)    
         screen.blit(Mantere.resized_image, Mantere.rect)    
+
+        # Ihmiset setup
+        screen.blit(Ernesti.resized_image, Ernesti.rect)
+        screen.blit(Kernesti.resized_image, Kernesti.rect)
 
         # Drawing code goes here
 
