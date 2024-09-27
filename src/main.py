@@ -78,7 +78,7 @@ valimatka = (Mantere.rect.left)-Saari.rect.right
 hatasanoma_list = ["Tulee", "ärpeegeetä", "tuuksie", "helppaa", "huomen", "vai", "tänää", "v**tu", "mie", "kuolen"]
 
 # Luodaan apinat dynaamiseesti niin että niiden nimi on hätäsanoma ja ne osaavat sen myös
-def create_monkeys(start=[]):
+def teach_10_monkeys(start=[]):
     monkeys = {}
 
     for i in range(10):
@@ -112,7 +112,7 @@ def main():
                      threading.Thread(target=move_monkey, args=(ErnestiApina, valimatka)).start()
                 
                 if ErnestiApinanappi10.button_rect.collidepoint(mouse_pos):
-                    print(create_monkeys(ErnestinApinoidenStart))
+                    ErnestinApinat = teach_10_monkeys(ErnestinApinoidenStart)
 
                 if KernestiApinanappi.button_rect.collidepoint(mouse_pos):
                     # prints current location of mouse
