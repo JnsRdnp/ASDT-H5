@@ -8,25 +8,28 @@ class Button():
 
     pygame.font.init()
 
-    def __init__(self, color, x,y,width,height, text=''):
+    def __init__(self, color, x,y, fontsize, text=''):
         self.color = color
         self.x = x
         self.y = y
-        self.width = width
-        self.height = height
+
         self.text = text
 
         
-
-        self.button_rect = pygame.Rect(self.x,self.y,self.width,self.height)
+        self.my_font = pygame.font.SysFont('Comic Sans MS', fontsize)
+        
 
         # Numeron pyöristys https://stackoverflow.com/questions/2356501/how-do-you-round-up-a-number
-        self.my_font = pygame.font.SysFont('Comic Sans MS', int(self.button_rect.height/1.5))
 
-        # self.text_width, self.text_height = self.font.size(text)
+        self.text_surface = self.my_font.render(self.text, False, (255, 255, 255))
+
+        # Tekstin koko https://stackoverflow.com/questions/45384910/attributeerror-pygame-surface-object-has-no-attribute-rect
+        text_rect = self.text_surface.get_rect()
+        
+        self.button_rect = pygame.Rect(self.x,self.y,text_rect.width+10,text_rect.height+2)
+        
 
     def draw(self,screen):
-        text_surface = self.my_font.render(self.text, False, (255, 255, 255))
-        
-        pygame.draw.rect(screen, self.color, self.button_rect,0)
-        screen.blit(text_surface, (self.button_rect.left+self.button_rect.width/4, self.button_rect.top))
+
+        pygame.draw.rect(screen, self.color, self.button_rect, border_radius=5)
+        screen.blit(self.text_surface, (self.button_rect.left+5, self.button_rect.top))

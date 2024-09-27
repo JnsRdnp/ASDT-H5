@@ -29,7 +29,7 @@ Kernesti = Person(image_file = "./assets/kerne.png", width = 50, height = 75, lo
 
 Apina = Monkey(image_file = "./assets/apina.png", width = 50, height = 75, location = [Saari.rect.right-10, Saari.rect.bottom - 85])
 
-Apinanappi = Button(BLACK,Meri.rect.left+20,Meri.rect.bottom+10,150,30,'Apina')
+Apinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+10,25,'APINA')
 
 # Mantereen ja saaren välimatka
 valimatka = Mantere.rect.left-Saari.rect.right 
