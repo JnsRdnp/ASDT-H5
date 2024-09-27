@@ -32,6 +32,9 @@ def update_screen():
     ErnestiApina.draw()
     ErnestiApinanappi.draw(screen)
 
+    KernestiApina.draw()
+    KernestiApinanappi.draw(screen)
+
     # Update the display
     pygame.display.flip()
 
@@ -50,7 +53,11 @@ Kernesti = Person(image_file = "./assets/kerne.png", width = 50, height = 75, lo
 ErnestiApina = Monkey(image_file = "./assets/apina.png", width = 50, height = 75, location = [Ernesti.rect.centerx+10, Ernesti.rect.top],
                screen=screen, update_screen_func=update_screen)
 
+KernestiApina = Monkey(image_file = "./assets/apina.png", width = 50, height = 75, location = [Kernesti.rect.centerx+10, Kernesti.rect.top],
+               screen=screen, update_screen_func=update_screen)
+
 ErnestiApinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+10,25,'Ernesti Apina')
+KernestiApinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+60,25,'Kernesti Apina')
 
 # Mantereen ja saaren välimatka
 valimatka = Mantere.rect.left-Saari.rect.right 
@@ -73,6 +80,10 @@ def main():
                 if ErnestiApinanappi.button_rect.collidepoint(mouse_pos):
                     # prints current location of mouse
                     ErnestiApina.liikuMantereelle(valimatka=valimatka)
+
+                if KernestiApinanappi.button_rect.collidepoint(mouse_pos):
+                    # prints current location of mouse
+                    KernestiApina.liikuMantereelle(valimatka=valimatka)
 
             if event.type == pygame.QUIT:
                 running = False
