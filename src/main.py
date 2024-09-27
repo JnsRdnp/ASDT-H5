@@ -52,7 +52,7 @@ def update_screen(mainloop = False):
     
     # Jos funktiota on kutsuttu pääloopista niin suoritetaan normaalisti
     # else:
-    
+
     screen.fill(WHITE)
     screen.blit(Meri.resized_image, Meri.rect)
     screen.blit(Saari.resized_image, Saari.rect)
@@ -75,8 +75,6 @@ Meri = Background(image_file = "./assets/meri.png", location = [0,0])
 
 Saari = Place(image_file = "./assets/saari.png", width = 300,height = 400 ,location = [0,-5])
 Mantere = Place(image_file = "./assets/mantere.png", width = 200, height = 400 , location = [WIDTH-200,10])
-
-
 
 
 Ernesti = Person(image_file = "./assets/erne.png", width = 50, height = 75, location = [Saari.rect.right-65, Saari.rect.top + 85])
