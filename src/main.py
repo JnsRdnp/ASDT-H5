@@ -31,6 +31,7 @@ def update_screen():
     screen.blit(Mantere.resized_image, Mantere.rect)
     screen.blit(Ernesti.resized_image, Ernesti.rect)
     screen.blit(Kernesti.resized_image, Kernesti.rect)
+
     ErnestiApina.draw()
     ErnestiApinanappi.draw(screen)
     KernestiApina.draw()
@@ -38,7 +39,7 @@ def update_screen():
 
     # Update the display
     pygame.display.flip()
-    clock.tick(60)
+    clock.tick(30)
 
 
 # Init sprites
@@ -47,17 +48,19 @@ Meri = Background(image_file = "./assets/meri.png", location = [0,0])
 Saari = Place(image_file = "./assets/saari.png", width = 300,height = 400 ,location = [0,-5])
 Mantere = Place(image_file = "./assets/mantere.png", width = 200, height = 400 , location = [WIDTH-200,10])
 
-Ernesti = Person(image_file = "./assets/erne.png", width = 50, height = 75, location = [Saari.rect.right-65, Saari.rect.top + 85])
-Kernesti = Person(image_file = "./assets/kerne.png", width = 50, height = 75, location = [Saari.rect.right-65, Saari.rect.bottom - 85])
 
+
+
+Ernesti = Person(image_file = "./assets/erne.png", width = 50, height = 75, location = [Saari.rect.right-65, Saari.rect.top + 85])
 ErnestiApina = Monkey(image_file = "./assets/apina.png", width = 50, height = 75, location = [Ernesti.rect.centerx+10, Ernesti.rect.top],
                screen=screen, update_screen_func=update_screen)
+ErnestiApinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+10,25,'Ernesti Apina')
 
+Kernesti = Person(image_file = "./assets/kerne.png", width = 50, height = 75, location = [Saari.rect.right-65, Saari.rect.bottom - 85])
 KernestiApina = Monkey(image_file = "./assets/apina.png", width = 50, height = 75, location = [Kernesti.rect.centerx+10, Kernesti.rect.top],
                screen=screen, update_screen_func=update_screen)
-
-ErnestiApinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+10,25,'Ernesti Apina')
 KernestiApinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+60,25,'Kernesti Apina')
+
 
 # Mantereen ja saaren välimatka
 valimatka = Mantere.rect.left-Saari.rect.right 

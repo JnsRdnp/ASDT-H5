@@ -19,6 +19,12 @@ class Monkey():
         for i in range(0,valimatka+5, kilometri):
             self.rect.x += kilometri
             
+            # Uimisen liikettä :D
+            if i%10 != 0:
+                self.rect.y += 10
+            else:
+                self.rect.y -= 10
+
             self.update_screen_func()
             time.sleep(0.05)
 
