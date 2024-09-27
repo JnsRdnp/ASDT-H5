@@ -1,6 +1,7 @@
 import pygame
 import sys
 from background import Background
+from place import Place
 
 # Initialize Pygame
 pygame.init()
@@ -10,7 +11,11 @@ WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("My Game")
 
+
+# Init sprites
 Meri = Background("./assets/meri.png", [0,0])
+Saari = Place("./assets/saari.png", 200, 400 ,[0,-5])
+Mantere = Place("./assets/mantere.png", 200, 400 ,[WIDTH-200,10])
 
 
 # Set up the clock for controlling frame rate
@@ -30,12 +35,16 @@ def main():
 
         # Game logic goes here
 
-        # Fill the screen with a background color
+        # Background setup
         screen.fill(WHITE)
-        screen.blit(Meri.image, Meri.rect)
+        screen.blit(Meri.resized_image, Meri.rect)
+
+        # Saari ja manner setup
+        screen.blit(Saari.resized_image, Saari.rect)    
+        screen.blit(Mantere.resized_image, Mantere.rect)    
 
         # Drawing code goes here
-        
+
 
         # Update the display
         pygame.display.flip()
@@ -49,3 +58,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+    
