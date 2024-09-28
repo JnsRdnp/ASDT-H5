@@ -34,7 +34,7 @@ def update_screen():
     screen.blit(Mantere.resized_image, Mantere.rect)
     screen.blit(Ernesti.resized_image, Ernesti.rect)
     screen.blit(Kernesti.resized_image, Kernesti.rect)
-    
+
     ErnestiApina.draw(screen)
     ErnestiApinanappi.draw(screen)
     ErnestiApinanappi10.draw(screen)
@@ -86,7 +86,7 @@ KernestiApinanappi10 = Button(BLACK, KernestiApinanappi.button_rect.right+10,Mer
 valimatka = (Mantere.rect.left)-Saari.rect.right
 hatasanoma_list = ["Tulee", "ärpeegeetä", "tuuksie", "helppaa", "huomen", "vai", "tänää", "v**tu", "mie", "kuolen"]
 
-# Luodaan apinat dynaamiseesti niin että niiden nimi on hätäsanoma ja ne osaavat sen myös
+# Luodaan apinat dynaamiseesti niin että hätäsanoma sisällytetään olioon
 def teach_10_monkeys(start=[]):
     monkeys = {}
 
@@ -146,6 +146,7 @@ def main():
                 
 
             if event.type == pygame.QUIT:
+                
                 running = False
 
 

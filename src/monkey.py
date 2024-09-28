@@ -28,9 +28,9 @@ class Monkey():
         for step in range(100):
             self.rect.x += kilometri  # Liikutaan yksi kilometri kerallaan sata kertaa
             
-            print(step)
+            # print(step)
 
-            # Uimisen liikettä :D
+            # Uimisen liikettä ylös alas :D
             if step % 2 != 0:
                 self.rect.y += 10
             else:
