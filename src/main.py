@@ -28,13 +28,13 @@ screen_needs_update = False
 
 def update_screen():
 
-
     screen.fill(WHITE)
     screen.blit(Meri.resized_image, Meri.rect)
     screen.blit(Saari.resized_image, Saari.rect)
     screen.blit(Mantere.resized_image, Mantere.rect)
     screen.blit(Ernesti.resized_image, Ernesti.rect)
     screen.blit(Kernesti.resized_image, Kernesti.rect)
+    
     ErnestiApina.draw(screen)
     ErnestiApinanappi.draw(screen)
     ErnestiApinanappi10.draw(screen)
