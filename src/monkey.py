@@ -1,5 +1,6 @@
 import pygame
 import time
+import random
 
 class Monkey():
     def __init__(self, location, screen, sana=""):
@@ -12,6 +13,7 @@ class Monkey():
 
 
         self.apina_mantereella = False
+        self.apina_elossa = True
 
         # Hätäviestin sana apinalle näkymään
         self.text = sana
@@ -35,13 +37,20 @@ class Monkey():
                 self.rect.y -= 10
 
             time.sleep(0.05)
+            # https://docs.python.org/3/library/random.html
+            # Prosentin mahdollisuus jokaisella kilometrillä kuolla
+            apinan_mahikset= random.randrange(0, 99, 1)
 
-        print("Apina pääsi maihin!")
+            if apinan_mahikset == 0:
+                print("Apina kuoli!")
+                self.apina_elossa = False
+                return
+
+        if self.apina_elossa == True : print("Apina pääsi maihin!")
+        else : print("Hai söi apinan")
         self.apina_mantereella = True
                 
         
-
-
 
     def draw(self,screen):
         self.screen.blit(self.resized_image, self.rect)
