@@ -1,6 +1,7 @@
 import pygame
 import sys
 import threading
+import time
 from background import Background
 from place import Place
 from person import Person
@@ -42,6 +43,10 @@ def update_screen():
     KernestiApinanappi.draw(screen)
     KernestiApinanappi10.draw(screen)
 
+    # Muiden luotujen apinoiden piirtäminen
+    for monkey in ErnestinApinat.values():
+        monkey.draw(screen)
+
     # Update the display
     pygame.display.flip()
 
@@ -61,6 +66,7 @@ ErnestiApina = Monkey(location = ErnestinApinoidenStart, screen=screen)
 
 ErnestiApinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+10,25,'Ernesti Apina')
 ErnestiApinanappi10 = Button(BLACK, ErnestiApinanappi.button_rect.right+10,Meri.rect.bottom+10,25,'10x')
+
 
 
 # Kernesti ja sen apinat
@@ -83,16 +89,24 @@ def teach_10_monkeys(start=[]):
 
     for i in range(10):
         sana = hatasanoma_list[i]  # Haetaan hatasanomasta yksi sana
-        monkeys[f"monkey_{i+1}"] = Monkey(location=start, screen=screen ,sana=sana)  # Create an instance and store it
+        monkeys[f"monkey_{i+1}"] = Monkey(location=start, screen=screen ,sana=sana)  # Luo apina ja talleta muide joukkoon
 
     return monkeys
+
+
+ErnestinApinat = teach_10_monkeys(ErnestinApinoidenStart)
+
+
+def send_10_monkeys(monkeys,distance):
+    for monkey in monkeys.values():
+        # move_monkey(monkey,distance)
+        threading.Thread(target=move_monkey, args=(monkey, distance)).start()
+        # time.sleep(0.5)
 
 
 # Apinan liikuttelun aloitus eri funktiossa jotta voidaan hyödyntää threadingiä
 def move_monkey(monkey, distance):
     monkey.liikuMantereelle(valimatka=distance)
-
-    
 
 
 # Main game loop
@@ -112,8 +126,10 @@ def main():
                      threading.Thread(target=move_monkey, args=(ErnestiApina, valimatka)).start()
                 
                 if ErnestiApinanappi10.button_rect.collidepoint(mouse_pos):
-                    ErnestinApinat = teach_10_monkeys(ErnestinApinoidenStart)
-
+                    
+                    threading.Thread(target=send_10_monkeys, args=(ErnestinApinat, valimatka)).start()
+                    # send_10_monkeys(ErnestinApinat, valimatka)
+                    
                 if KernestiApinanappi.button_rect.collidepoint(mouse_pos):
                     # prints current location of mouse
                     threading.Thread(target=move_monkey, args=(KernestiApina, valimatka)).start()
