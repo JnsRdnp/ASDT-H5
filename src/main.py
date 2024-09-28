@@ -47,6 +47,9 @@ def update_screen():
     for monkey in ErnestinApinat.values():
         monkey.draw(screen)
 
+    for monkey in KernestinApinat.values():
+        monkey.draw(screen)
+
     # Update the display
     pygame.display.flip()
 
@@ -95,13 +98,14 @@ def teach_10_monkeys(start=[]):
 
 
 ErnestinApinat = teach_10_monkeys(ErnestinApinoidenStart)
+KernestinApinat = teach_10_monkeys(KernestinApinoidenStart)
 
 
 def send_10_monkeys(monkeys,distance):
     for monkey in monkeys.values():
-        # move_monkey(monkey,distance)
+        # Lähetetään apinat jonossa matkaan että ne eivät ole läjässä
         threading.Thread(target=move_monkey, args=(monkey, distance)).start()
-        # time.sleep(0.5)
+        time.sleep(0.65)
 
 
 # Apinan liikuttelun aloitus eri funktiossa jotta voidaan hyödyntää threadingiä
@@ -128,7 +132,12 @@ def main():
                 if ErnestiApinanappi10.button_rect.collidepoint(mouse_pos):
                     
                     threading.Thread(target=send_10_monkeys, args=(ErnestinApinat, valimatka)).start()
-                    # send_10_monkeys(ErnestinApinat, valimatka)
+
+
+                if KernestiApinanappi10.button_rect.collidepoint(mouse_pos):
+                    
+                    threading.Thread(target=send_10_monkeys, args=(KernestinApinat, valimatka)).start()
+
                     
                 if KernestiApinanappi.button_rect.collidepoint(mouse_pos):
                     # prints current location of mouse
