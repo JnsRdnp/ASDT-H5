@@ -183,6 +183,7 @@ def pohteri_vahtii():
                 Ernesti.iloitsee=True
                 pygame.mixer.Sound.play(yes_sound)
                 time.sleep(2)
+                pygame.mixer.Sound.play(party_sound)
 
             ErnestiJuhlii = True
                 
@@ -213,6 +214,7 @@ def eteteri_vahtii():
                 pygame.mixer.Sound.play(yes_sound)
                 Kernesti.iloitsee=True
                 time.sleep(2)
+                pygame.mixer.Sound.play(party_sound)
 
         time.sleep(1)
     
