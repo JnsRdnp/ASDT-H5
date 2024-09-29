@@ -59,7 +59,7 @@ def update_screen():
 Meri = Background(image_file = "./assets/meri.png", location = [0,0])
 
 Saari = Place(image_file = "./assets/saari.png", width = 300,height = 400 ,location = [0,-5])
-Mantere = Place(image_file = "./assets/mantere.png", width = 200, height = 400 , location = [WIDTH-185,10])
+Mantere = Place(image_file = "./assets/mantere.png", width = 250, height = 400 , location = [WIDTH-230,10])
 
 # Ernesti ja sen apinat
 Ernesti = Person(image_file = "./assets/erne.png", width = 50, height = 75, location = [Saari.rect.right-65, Saari.rect.top + 85])
@@ -102,6 +102,11 @@ KernestinApinat = teach_10_monkeys(KernestinApinoidenStart)
 
 
 def send_10_monkeys(monkeys,distance):
+
+    # Luodaan uusi apinakatras saarelle (vanhat apinat syntyy saarelle takaisin)
+    for monkey in monkeys.values():
+        monkey.reset_monkey()
+
     for monkey in monkeys.values():
         # Lähetetään apinat jonossa matkaan että ne eivät ole läjässä
         threading.Thread(target=move_monkey, args=(monkey, distance)).start()
@@ -110,6 +115,7 @@ def send_10_monkeys(monkeys,distance):
 
 # Apinan liikuttelun aloitus eri funktiossa jotta voidaan hyödyntää threadingiä
 def move_monkey(monkey, distance):
+    monkey.reset_monkey()
     monkey.liikuMantereelle(valimatka=distance)
 
 
@@ -127,10 +133,9 @@ def main():
 
                 if ErnestiApinanappi.button_rect.collidepoint(mouse_pos):
                     # prints current location of mouse
-                     threading.Thread(target=move_monkey, args=(ErnestiApina, valimatka)).start()
+                    threading.Thread(target=move_monkey, args=(ErnestiApina, valimatka)).start()
                 
                 if ErnestiApinanappi10.button_rect.collidepoint(mouse_pos):
-                    
                     threading.Thread(target=send_10_monkeys, args=(ErnestinApinat, valimatka)).start()
 
 

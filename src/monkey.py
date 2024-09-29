@@ -9,7 +9,8 @@ class Monkey():
         self.resized_image = pygame.transform.scale(self.image,(50, 75))
         self.screen = screen
         self.rect = self.resized_image.get_rect()
-        self.rect.x, self.rect.y = location
+        self.start_location = location
+        self.rect.x, self.rect.y = self.start_location
 
 
         self.apina_mantereella = False
@@ -19,11 +20,16 @@ class Monkey():
         self.text = sana
         self.my_font = pygame.font.SysFont('Comic Sans MS', 17)
         self.text_surface = self.my_font.render(self.text, False, (0, 0, 0))
-
+        
+    def reset_monkey(self):
+        self.apina_elossa = True
+        self.apina_mantereella = False
+        self.rect.x, self.rect.y = self.start_location
 
     def liikuMantereelle(self, valimatka):
 
         kilometri = valimatka / 100  # Lasketaan yhden kilometrin määrä näytöllä
+        
 
         for step in range(100):
             self.rect.x += kilometri  # Liikutaan yksi kilometri kerallaan sata kertaa
@@ -46,11 +52,17 @@ class Monkey():
                 self.apina_elossa = False
                 return
 
-        if self.apina_elossa == True : print("Apina pääsi maihin!")
-        else : print("Hai söi apinan")
-        self.apina_mantereella = True
-                
+        if self.apina_elossa == True :
+             print("Apina pääsi maihin!")
+             self.apina_mantereella = True
+        else :
+            print("Hai söi apinan")
         
+        # Syntyy uudestaan saarella
+        
+        
+        
+
 
     def draw(self,screen):
         self.screen.blit(self.resized_image, self.rect)
