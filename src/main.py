@@ -46,6 +46,9 @@ def update_screen():
     Ernesti.draw(screen)
     Kernesti.draw(screen)
 
+    Pohteri.draw(screen)
+    Eteteri.draw(screen)
+
     # Dynaamisesti luotujen apinoiden piirtäminen
     for monkey in ErnestinApinat.values():
         monkey.draw(screen)
@@ -77,6 +80,11 @@ Kernesti = Person(image_file = "./assets/kerne.png", width = 50, height = 75, lo
 KernestiApina = Monkey(screen=screen, omistaja=Kernesti)
 KernestiApinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+60,25,'Kernesti Apina')
 KernestiApinanappi10 = Button(BLACK, KernestiApinanappi.button_rect.right+10,Meri.rect.bottom+60,25,'10x')
+
+# Pohteri ja eteteri
+Pohteri = Person(image_file = "./assets/pohteri.png", width = 60, height = 85, location = [Mantere.rect.centerx-45, Mantere.rect.top + 85], satamavahti=True)
+Eteteri = Person(image_file = "./assets/eteteri.png", width = 60, height = 85, location = [Mantere.rect.centerx-50, Mantere.rect.bottom - 95], satamavahti=True)
+
 
 
 # Mantereen ja saaren välimatka

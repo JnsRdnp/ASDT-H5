@@ -49,9 +49,9 @@ class Monkey():
             time.sleep(0.05)
             # https://docs.python.org/3/library/random.html
             # Prosentin mahdollisuus jokaisella kilometrillä kuolla
-            apinan_mahikset= random.randrange(0, 99, 1)
+            apinan_mahikset= random.randint(1, 100)
 
-            if apinan_mahikset == 0:
+            if apinan_mahikset == 50:
                 print("Apina kuoli!")
                 self.apina_elossa = False
                 return
