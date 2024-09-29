@@ -7,6 +7,7 @@ from place import Place
 from person import Person
 from monkey import Monkey
 from button import Button
+from ship import Ship
 
 
 # Initialize Pygame
@@ -50,9 +51,11 @@ def update_screen():
 
     Pohteri.draw(screen, pohjoisen_sanat)
     PohteriVahdiNappi.draw(screen)
+    PohterinLaiva.draw(screen)
 
     Eteteri.draw(screen, etelan_sanat)
     EteteriVahdiNappi.draw(screen)
+    EteterinLaiva.draw(screen)
 
     # Dynaamisesti luotujen apinoiden piirtäminen
     for monkey in ErnestinApinat.values():
@@ -90,6 +93,11 @@ PohteriVahdiNappi = Button(BLACK,Meri.rect.centerx+120,Meri.rect.bottom+10,25,'P
 
 Eteteri = Person(image_file = "./assets/eteteri.png", width = 60, height = 85, location = [Mantere.rect.centerx-50, Mantere.rect.bottom - 95], satamavahti=True)
 EteteriVahdiNappi = Button(BLACK,Meri.rect.centerx+120, Meri.rect.bottom+60,25,'Eteteri vahdi')
+
+# Laivat
+PohterinLaiva = Ship(screen=screen, omistaja=Pohteri)
+EteterinLaiva = Ship(screen=screen, omistaja=Eteteri)
+
 
 
 # Mantereen ja saaren välimatka
@@ -139,6 +147,8 @@ def pohteri_vahtii():
     # Lopettaa vahtimisen jos tulee 10 erilaista sanaa
     while vahdi == True and running == True:
         vahdi = Pohteri.vahdi(pohjoisen_sanat)
+        if vahdi==False:
+            PohterinLaiva.liikuSaarelle(valimatka=valimatka)
         time.sleep(1)
 
 def eteteri_vahtii():
@@ -150,7 +160,11 @@ def eteteri_vahtii():
     # Lopettaa vahtimisen jos tulee 10 erilaista sanaa tai ohjelma lopetetaan
     while vahdi == True and running == True:
         vahdi = Eteteri.vahdi(etelan_sanat)
+        
+        if vahdi==False:
+            EteterinLaiva.liikuSaarelle(valimatka=valimatka)
         time.sleep(1)
+    
 
 
 # Main game loop
