@@ -31,6 +31,55 @@ running = True
 ErnestiJuhlii = False
 KernestiJuhlii = False
 
+# Init sprites
+Meri = Background(image_file = "./assets/meri.png", location = [0,0])
+
+Saari = Place(image_file = "./assets/saari.png", width = 300,height = 400 ,location = [0,-5])
+Mantere = Place(image_file = "./assets/mantere.png", width = 250, height = 400 , location = [WIDTH-230,10])
+
+# Ernesti ja sen apinat
+Ernesti = Person(image_file = "./assets/erne.png", width = 50, height = 75, location = [Saari.rect.right-65, Saari.rect.top + 85])
+ErnestiApina = Monkey(screen=screen, omistaja=Ernesti)
+ErnestiApinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+10,25,'Ernesti Apina')
+ErnestiApinanappi10 = Button(BLACK, ErnestiApinanappi.button_rect.right+10,Meri.rect.bottom+10,25,'10x')
+
+# Kernesti ja sen apinat
+Kernesti = Person(image_file = "./assets/kerne.png", width = 50, height = 75, location = [Saari.rect.right-65, Saari.rect.bottom - 85])
+KernestiApina = Monkey(screen=screen, omistaja=Kernesti)
+KernestiApinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+60,25,'Kernesti Apina')
+KernestiApinanappi10 = Button(BLACK, KernestiApinanappi.button_rect.right+10,Meri.rect.bottom+60,25,'10x')
+
+# Pohteri ja eteteri
+Pohteri = Person(image_file = "./assets/pohteri.png", width = 60, height = 85, location = [Mantere.rect.centerx-45, Mantere.rect.top + 85], satamavahti=True)
+PohteriVahdiNappi = Button(BLACK,Meri.rect.centerx+120,Meri.rect.bottom+10,25,'Pohteri vahdi')
+PohteriVahdissa = False
+
+Eteteri = Person(image_file = "./assets/eteteri.png", width = 60, height = 85, location = [Mantere.rect.centerx-50, Mantere.rect.bottom - 95], satamavahti=True)
+EteteriVahdiNappi = Button(BLACK,Meri.rect.centerx+120, Meri.rect.bottom+60,25,'Eteteri vahdi')
+EteteriVahdissa = False
+
+# Laivat
+PohterinLaiva = Ship(screen=screen, omistaja=Pohteri)
+EteterinLaiva = Ship(screen=screen, omistaja=Eteteri)
+
+# Pirskeet
+ErnestinPirskeet = Celebration("Ernestin ",Ernesti, 30)
+KernestinPirskeet = Celebration("Kernestin ",Kernesti, 30)
+
+yes_sound = pygame.mixer.Sound("./assets/yes.wav")
+party_sound = pygame.mixer.Sound("./assets/party.wav")
+
+
+# Mantereen ja saaren välimatka
+valimatka = (Mantere.rect.left)-Saari.rect.right
+hatasanoma_list = ["Tulee", "ärpeegeetä", "tuuksie", "helppaa", "huomen", "vai", "tänää", "v**tu", "mie", "kuolen"]
+
+
+pohjoisen_sanat  = []
+etelan_sanat = []
+
+
+
 def update_screen():
 
     screen.fill(WHITE)
@@ -81,48 +130,6 @@ def update_screen():
 
     clock.tick(60)
 
-# Init sprites
-Meri = Background(image_file = "./assets/meri.png", location = [0,0])
-
-Saari = Place(image_file = "./assets/saari.png", width = 300,height = 400 ,location = [0,-5])
-Mantere = Place(image_file = "./assets/mantere.png", width = 250, height = 400 , location = [WIDTH-230,10])
-
-# Ernesti ja sen apinat
-Ernesti = Person(image_file = "./assets/erne.png", width = 50, height = 75, location = [Saari.rect.right-65, Saari.rect.top + 85])
-ErnestiApina = Monkey(screen=screen, omistaja=Ernesti)
-ErnestiApinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+10,25,'Ernesti Apina')
-ErnestiApinanappi10 = Button(BLACK, ErnestiApinanappi.button_rect.right+10,Meri.rect.bottom+10,25,'10x')
-
-# Kernesti ja sen apinat
-Kernesti = Person(image_file = "./assets/kerne.png", width = 50, height = 75, location = [Saari.rect.right-65, Saari.rect.bottom - 85])
-KernestiApina = Monkey(screen=screen, omistaja=Kernesti)
-KernestiApinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+60,25,'Kernesti Apina')
-KernestiApinanappi10 = Button(BLACK, KernestiApinanappi.button_rect.right+10,Meri.rect.bottom+60,25,'10x')
-
-# Pohteri ja eteteri
-Pohteri = Person(image_file = "./assets/pohteri.png", width = 60, height = 85, location = [Mantere.rect.centerx-45, Mantere.rect.top + 85], satamavahti=True)
-PohteriVahdiNappi = Button(BLACK,Meri.rect.centerx+120,Meri.rect.bottom+10,25,'Pohteri vahdi')
-PohteriVahdissa = False
-
-Eteteri = Person(image_file = "./assets/eteteri.png", width = 60, height = 85, location = [Mantere.rect.centerx-50, Mantere.rect.bottom - 95], satamavahti=True)
-EteteriVahdiNappi = Button(BLACK,Meri.rect.centerx+120, Meri.rect.bottom+60,25,'Eteteri vahdi')
-EteteriVahdissa = False
-
-# Laivat
-PohterinLaiva = Ship(screen=screen, omistaja=Pohteri)
-EteterinLaiva = Ship(screen=screen, omistaja=Eteteri)
-
-# Pirskeet
-ErnestinPirskeet = Celebration("Ernestin ",Ernesti, 30)
-KernestinPirskeet = Celebration("Kernestin ",Kernesti, 30)
-
-yes_sound = pygame.mixer.Sound("./assets/yes.wav")
-party_sound = pygame.mixer.Sound("./assets/party.wav")
-
-
-# Mantereen ja saaren välimatka
-valimatka = (Mantere.rect.left)-Saari.rect.right
-hatasanoma_list = ["Tulee", "ärpeegeetä", "tuuksie", "helppaa", "huomen", "vai", "tänää", "v**tu", "mie", "kuolen"]
 
 # Luodaan apinat dynaamiseesti niin että hätäsanoma sisällytetään olioon
 def teach_10_monkeys(owner=Person, saapuneet_sanat=[]):
@@ -134,14 +141,14 @@ def teach_10_monkeys(owner=Person, saapuneet_sanat=[]):
 
     return monkeys
 
-pohjoisen_sanat  = []
-etelan_sanat = []
-
 ErnestinApinat = teach_10_monkeys(Ernesti, pohjoisen_sanat)
 KernestinApinat = teach_10_monkeys(Kernesti, etelan_sanat)
 
+monkeys_sent = False
 
 def send_10_monkeys(monkeys,distance, vastaanottajavahdissa):
+    global monkeys_sent
+    monkeys_sent = True
 
     # Luodaan uusi apinakatras saarelle (vanhat apinat syntyy saarelle takaisin)
     for monkey in monkeys.values():
@@ -166,7 +173,7 @@ def pohteri_vahtii():
     PohteriVahdissa = True
     global ErnestiJuhlii
 
-    # Pidetään huolta että while looppi loppuu myös jos ohjelma lopetetaan
+    # Pidetään huolta että while looppi loppuu myös jos ohjelma lopetetaan tällä muuttujalla
     global running
 
 
@@ -194,7 +201,7 @@ def eteteri_vahtii():
     global EteteriVahdissa
     EteteriVahdissa = True
 
-    # Pidetään huolta että while looppi loppuu myös jos ohjelma lopetetaan
+    # Pidetään huolta että while looppi loppuu myös jos ohjelma lopetetaan tällä muuttujalla
     global running
 
     global KernestiJuhlii
@@ -241,7 +248,6 @@ def main():
 
 
                 if KernestiApinanappi10.button_rect.collidepoint(mouse_pos):
-                    
                     threading.Thread(target=send_10_monkeys, args=(KernestinApinat, valimatka, EteteriVahdissa)).start()
 
                 if KernestiApinanappi.button_rect.collidepoint(mouse_pos):

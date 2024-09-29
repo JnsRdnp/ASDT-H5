@@ -64,6 +64,7 @@ class Person(pygame.sprite.Sprite):
             print("Tässähän on hätäviesti!")
             # Lopetetaan vahtiminen jos 10 sanaa tullut
             return False
+        
         return True
     
 

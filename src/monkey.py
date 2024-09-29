@@ -36,6 +36,7 @@ class Monkey():
         self.my_font = pygame.font.SysFont('Comic Sans MS', 17)
         self.text_surface = self.my_font.render(self.text, False, (0, 0, 0))
 
+        # Ääniä
         self.splash_sound = pygame.mixer.Sound("./assets/splash.wav")
         self.splash_sound.set_volume(0.05)
         self.success_sound = pygame.mixer.Sound("./assets/success.wav")
@@ -52,15 +53,12 @@ class Monkey():
         kilometri = valimatka / 100  # Lasketaan yhden kilometrin määrä näytöllä
 
 
-
         for step in range(100):
 
 
             # pygame.mixer.Sound.play(self.splash_sound)
 
             self.rect.x += kilometri  # Liikutaan yksi kilometri kerallaan sata kertaa
-            
-            # print(step)
 
             # Uimisen liikettä ylös alas :D
             if step % 2 != 0:
@@ -70,9 +68,12 @@ class Monkey():
 
             time.sleep(0.05)
             # https://docs.python.org/3/library/random.html
-            apinan_mahikset= random.randint(1, 200)
 
-            if apinan_mahikset == 50:
+            
+            apinan_mahikset= random.randint(1, 145)
+
+            # Jos arvottu numero on 100, apina kuolee
+            if apinan_mahikset == 100:
                 # print("Apina kuoli!")
                 self.apina_elossa = False
                 pygame.mixer.Sound.play(self.chomp_sound)
@@ -93,7 +94,6 @@ class Monkey():
         else:
             # Tämä ääni ei jostain syystä toimi
             self.apina_elossa = False
-            pygame.mixer.Sound.play(self.chomp_sound)
             print("Hai söi apinan")
         
         # Syntyy uudestaan saarella

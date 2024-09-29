@@ -50,8 +50,6 @@ class Celebration(pygame.sprite.Sprite):
         screen.blit(self.text_surface1, text_rect1.topleft)
         screen.blit(self.text_surface2, text_rect2.topleft)
 
-        print("Piiretään juhlat")
-
 
 
     
