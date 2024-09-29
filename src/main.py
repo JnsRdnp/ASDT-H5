@@ -150,14 +150,13 @@ def pohteri_vahtii():
     global running
 
 
-    # Pyyhitään pois aijemmat saapuneet sanat kun vahti ei vahtinut
-    # pohjoisen_sanat = []
-
     # Lopettaa vahtimisen jos tulee 10 erilaista sanaa
     while vahdi == True and running == True:
         vahdi = Pohteri.vahdi(pohjoisen_sanat)
         if vahdi==False:
             PohterinLaiva.liikuSaarelle(valimatka=valimatka)
+
+            #Iloitaan vain jos ollaan ensimmäisiä
             if Kernesti.iloitsee == False:
                 Ernesti.iloitsee=True
         time.sleep(1)
@@ -172,15 +171,13 @@ def eteteri_vahtii():
     # Pidetään huolta että while looppi loppuu myös jos ohjelma lopetetaan
     global running
 
-    # Pyyhitään pois aijemmat saapuneet sanat kun vahti ei vahtinut
-    # etelan_sanat = []
-
     # Lopettaa vahtimisen jos tulee 10 erilaista sanaa tai ohjelma lopetetaan
     while vahdi == True and running == True:
         vahdi = Eteteri.vahdi(etelan_sanat)
         
         if vahdi==False:
             EteterinLaiva.liikuSaarelle(valimatka=valimatka)
+            # Iloitaan vain jos ollaan ensimmäisiä
             if Ernesti.iloitsee == False:
                 Kernesti.iloitsee=True
 
