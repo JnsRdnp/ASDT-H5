@@ -1,6 +1,8 @@
 import pygame
 import time
 import random
+import winsound
+
 
 # monta ääntä päällekäin https://stackoverflow.com/questions/53617967/play-music-and-sound-effects-on-top-of-each-other-pygame
 
@@ -34,9 +36,8 @@ class Monkey():
         self.my_font = pygame.font.SysFont('Comic Sans MS', 17)
         self.text_surface = self.my_font.render(self.text, False, (0, 0, 0))
 
-        pygame.mixer.init()
-
         self.splash_sound = pygame.mixer.Sound("./assets/splash.wav")
+        self.splash_sound.set_volume(0.05)
         self.success_sound = pygame.mixer.Sound("./assets/success.wav")
         self.chomp_sound = pygame.mixer.Sound("./assets/chomp.wav")
 
@@ -54,8 +55,8 @@ class Monkey():
 
         for step in range(100):
 
-            pygame.mixer.Sound.play(self.splash_sound)
 
+            # pygame.mixer.Sound.play(self.splash_sound)
 
             self.rect.x += kilometri  # Liikutaan yksi kilometri kerallaan sata kertaa
             
@@ -74,6 +75,7 @@ class Monkey():
             if apinan_mahikset == 50:
                 # print("Apina kuoli!")
                 self.apina_elossa = False
+                pygame.mixer.Sound.play(self.chomp_sound)
                 return
 
         if self.apina_elossa == True:
@@ -91,7 +93,7 @@ class Monkey():
         else:
             # Tämä ääni ei jostain syystä toimi
             self.apina_elossa = False
-            pygame.mixer.Channel(2).play(pygame.mixer.Sound(self.chomp_sound), maxtime=3000)
+            pygame.mixer.Sound.play(self.chomp_sound)
             print("Hai söi apinan")
         
         # Syntyy uudestaan saarella

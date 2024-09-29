@@ -13,6 +13,7 @@ from celebration import Celebration
 # Initialize Pygame
 pygame.init()
 
+
 # Set up the window
 WIDTH, HEIGHT = 1000, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -117,6 +118,9 @@ EteterinLaiva = Ship(screen=screen, omistaja=Eteteri)
 ErnestinPirskeet = Celebration("Ernestin ",Ernesti, 30)
 KernestinPirskeet = Celebration("Kernestin ",Kernesti, 30)
 
+yes_sound = pygame.mixer.Sound("./assets/yes.wav")
+party_sound = pygame.mixer.Sound("./assets/party.wav")
+
 
 # Mantereen ja saaren välimatka
 valimatka = (Mantere.rect.left)-Saari.rect.right
@@ -177,6 +181,8 @@ def pohteri_vahtii():
             #Iloitaan vain jos ollaan ensimmäisiä
             if Kernesti.iloitsee == False:
                 Ernesti.iloitsee=True
+                pygame.mixer.Sound.play(yes_sound)
+                time.sleep(2)
 
             ErnestiJuhlii = True
                 
@@ -204,7 +210,9 @@ def eteteri_vahtii():
             KernestiJuhlii = True
             # Iloitaan vain jos ollaan ensimmäisiä
             if Ernesti.iloitsee == False:
+                pygame.mixer.Sound.play(yes_sound)
                 Kernesti.iloitsee=True
+                time.sleep(2)
 
         time.sleep(1)
     
