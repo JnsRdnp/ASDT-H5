@@ -46,8 +46,11 @@ def update_screen():
     Ernesti.draw(screen)
     Kernesti.draw(screen)
 
-    Pohteri.draw(screen)
-    Eteteri.draw(screen)
+    Pohteri.draw(screen, pohjoisen_sanat)
+    PohteriVahdiNappi.draw(screen)
+
+    Eteteri.draw(screen, etelan_sanat)
+    EteteriVahdiNappi.draw(screen)
 
     # Dynaamisesti luotujen apinoiden piirtäminen
     for monkey in ErnestinApinat.values():
@@ -81,25 +84,31 @@ KernestiApinanappi10 = Button(BLACK, KernestiApinanappi.button_rect.right+10,Mer
 
 # Pohteri ja eteteri
 Pohteri = Person(image_file = "./assets/pohteri.png", width = 60, height = 85, location = [Mantere.rect.centerx-45, Mantere.rect.top + 85], satamavahti=True)
+PohteriVahdiNappi = Button(BLACK,Meri.rect.centerx+120,Meri.rect.bottom+10,25,'Pohteri vahdi')
+
 Eteteri = Person(image_file = "./assets/eteteri.png", width = 60, height = 85, location = [Mantere.rect.centerx-50, Mantere.rect.bottom - 95], satamavahti=True)
+EteteriVahdiNappi = Button(BLACK,Meri.rect.centerx+120, Meri.rect.bottom+60,25,'Eteteri vahdi')
+
 
 # Mantereen ja saaren välimatka
 valimatka = (Mantere.rect.left)-Saari.rect.right
 hatasanoma_list = ["Tulee", "ärpeegeetä", "tuuksie", "helppaa", "huomen", "vai", "tänää", "v**tu", "mie", "kuolen"]
 
 # Luodaan apinat dynaamiseesti niin että hätäsanoma sisällytetään olioon
-def teach_10_monkeys(owner=Person):
+def teach_10_monkeys(owner=Person, saapuneet_sanat=[]):
     monkeys = {}
 
     for i in range(10):
         sana = hatasanoma_list[i]  # Haetaan hatasanomasta yksi sana
-        monkeys[f"monkey_{i+1}"] = Monkey(screen=screen , sana=sana, omistaja=owner)  # Luo apina ja talleta muide joukkoon
+        monkeys[f"monkey_{i+1}"] = Monkey(screen=screen , sana=sana, omistaja=owner, saapuneet_sanat=saapuneet_sanat)  # Luo apina ja talleta muide joukkoon
 
     return monkeys
 
+pohjoisen_sanat  = []
+etelan_sanat = []
 
-ErnestinApinat = teach_10_monkeys(Ernesti)
-KernestinApinat = teach_10_monkeys(Kernesti)
+ErnestinApinat = teach_10_monkeys(Ernesti, pohjoisen_sanat)
+KernestinApinat = teach_10_monkeys(Kernesti, etelan_sanat)
 
 
 def send_10_monkeys(monkeys,distance):
@@ -119,15 +128,13 @@ def move_monkey(monkey, distance):
     monkey.reset_monkey()
     monkey.liikuMantereelle(valimatka=distance)
 
-pohjoisen_sanat  = []
-def paivita_pohj_saapuneita_sanoja(sana):
-    if sana not in pohjoisen_sanat:
-        pohjoisen_sanat.append(sana)
+def pohteri_vahtii():
+    vahdi = True
+    # Lopettaa vahtimisen jos tulee 10 erilaista sanaa
+    while vahdi == True:
+        vahdi = Pohteri.vahdi(pohjoisen_sanat)
+        time.sleep(1)
 
-etelan_sanat = []
-def paivita_etel_saapuneita_sanoja(sana):
-    if sana not in etelan_sanat:
-        etelan_sanat.append(sana)
 
 # Main game loop
 def main():
@@ -153,10 +160,14 @@ def main():
                     
                     threading.Thread(target=send_10_monkeys, args=(KernestinApinat, valimatka)).start()
 
-                    
                 if KernestiApinanappi.button_rect.collidepoint(mouse_pos):
                     # prints current location of mouse
                     threading.Thread(target=move_monkey, args=(KernestiApina, valimatka)).start()
+
+                if PohteriVahdiNappi.button_rect.collidepoint(mouse_pos):
+                    # prints current location of mouse
+                    threading.Thread(target=pohteri_vahtii).start()
+
 
                 
 
@@ -167,7 +178,6 @@ def main():
 
         update_screen()
         
-
     pygame.quit()
     sys.exit()
 

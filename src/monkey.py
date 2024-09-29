@@ -3,7 +3,7 @@ import time
 import random
 
 class Monkey():
-    def __init__(self, screen, omistaja ,sana=""):
+    def __init__(self, screen, omistaja ,sana="", saapuneet_sanat=None):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("./assets/apina.png")
         self.resized_image = pygame.transform.scale(self.image,(50, 75))
@@ -17,6 +17,10 @@ class Monkey():
 
         self.apina_mantereella = False
         self.apina_elossa = True
+        
+        
+        self.saapuneet_sanat = saapuneet_sanat
+
 
         # KernestinApinoidenStart  = [Kernesti.rect.centerx+10, Kernesti.rect.top]
 
@@ -49,18 +53,23 @@ class Monkey():
             time.sleep(0.05)
             # https://docs.python.org/3/library/random.html
             # Prosentin mahdollisuus jokaisella kilometrillä kuolla
-            apinan_mahikset= random.randint(1, 100)
+            apinan_mahikset= random.randint(1, 200)
 
             if apinan_mahikset == 50:
                 print("Apina kuoli!")
                 self.apina_elossa = False
                 return
 
-        if self.apina_elossa == True :
-             print("Apina pääsi maihin!")
-             self.omistaja.apinat_perilla += 1
-             self.apina_mantereella = True
-        else :
+        if self.apina_elossa == True:
+            print("Apina pääsi maihin!")
+            self.omistaja.apinat_perilla += 1
+            self.apina_mantereella = True
+
+            # Päivitetään sanalistaa mitä mantereelle on päässyt
+            if self.saapuneet_sanat is not None and self.text not in self.saapuneet_sanat:
+                self.saapuneet_sanat.append(self.text)
+
+        else:
             print("Hai söi apinan")
         
         # Syntyy uudestaan saarella

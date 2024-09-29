@@ -21,7 +21,7 @@ class Person(pygame.sprite.Sprite):
             self.vastaanotetut_sanat = []
 
 
-    def draw(self,screen):
+    def draw(self,screen, saapuneet_sanat = None):
         if self.satamavahti == False:
             self.apinaprosentti = 0
             if self.lahetetyt_apinat != 0:
@@ -31,14 +31,20 @@ class Person(pygame.sprite.Sprite):
             self.text_surface = self.my_font.render(f"{self.apinat_perilla} / {self.lahetetyt_apinat} ({self.apinaprosentti} %)", False, (255, 0, 0))
 
             screen.blit(self.text_surface, (self.rect.left, self.rect.top-27))
+        else:
+            self.my_font = pygame.font.SysFont('Comic Sans MS', 17)
+            self.text_surface = self.my_font.render(f"Uniikkeja sanoja: {len(saapuneet_sanat)}", False, (255, 0, 0))
+
+            screen.blit(self.text_surface, (self.rect.left, self.rect.top-27))
 
         screen.blit(self.resized_image, self.rect)
         
     def vahdi(self, saapuneet_sanat):
-        vahdi = True
-        while vahdi == True:
-            print("Lisätään sana listaan jos uusi")
-            if len(saapuneet_sanat) > 9:
-                print("Tässähän on hätä viesti!")
+        print(saapuneet_sanat)
+        if len(saapuneet_sanat) > 9:
+            print("Tässähän on hätäviesti!")
+            # Lopetetaan vahtiminen jos 10 sanaa tullut
+            return False
+        return True
 
     
