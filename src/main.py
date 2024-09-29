@@ -64,6 +64,8 @@ def update_screen():
     for monkey in KernestinApinat.values():
         monkey.draw(screen)
 
+    print("Pohjoisen sanat: ", pohjoisen_sanat)
+
     # Update the display
     pygame.display.flip()
 
@@ -90,9 +92,11 @@ KernestiApinanappi10 = Button(BLACK, KernestiApinanappi.button_rect.right+10,Mer
 # Pohteri ja eteteri
 Pohteri = Person(image_file = "./assets/pohteri.png", width = 60, height = 85, location = [Mantere.rect.centerx-45, Mantere.rect.top + 85], satamavahti=True)
 PohteriVahdiNappi = Button(BLACK,Meri.rect.centerx+120,Meri.rect.bottom+10,25,'Pohteri vahdi')
+PohteriVahdissa = False
 
 Eteteri = Person(image_file = "./assets/eteteri.png", width = 60, height = 85, location = [Mantere.rect.centerx-50, Mantere.rect.bottom - 95], satamavahti=True)
 EteteriVahdiNappi = Button(BLACK,Meri.rect.centerx+120, Meri.rect.bottom+60,25,'Eteteri vahdi')
+EteteriVahdissa = False
 
 # Laivat
 PohterinLaiva = Ship(screen=screen, omistaja=Pohteri)
@@ -121,7 +125,7 @@ ErnestinApinat = teach_10_monkeys(Ernesti, pohjoisen_sanat)
 KernestinApinat = teach_10_monkeys(Kernesti, etelan_sanat)
 
 
-def send_10_monkeys(monkeys,distance):
+def send_10_monkeys(monkeys,distance, vastaanottajavahdissa):
 
     # Luodaan uusi apinakatras saarelle (vanhat apinat syntyy saarelle takaisin)
     for monkey in monkeys.values():
@@ -129,20 +133,28 @@ def send_10_monkeys(monkeys,distance):
 
     for monkey in monkeys.values():
         # Lähetetään apinat jonossa uimaan että ne eivät ole läjässä
-        threading.Thread(target=move_monkey, args=(monkey, distance)).start()
+        threading.Thread(target=move_monkey, args=(monkey, distance, vastaanottajavahdissa)).start()
         time.sleep(0.65)
 
 
 # Apinan liikuttelun aloitus eri funktiossa jotta voidaan hyödyntää threadingiä
-def move_monkey(monkey, distance):
+def move_monkey(monkey, distance, vastaanottajavahdissa = False):
     monkey.reset_monkey()
-    monkey.liikuMantereelle(valimatka=distance)
+    monkey.liikuMantereelle(valimatka=distance, vastaanottajavahdissa=vastaanottajavahdissa)
 
 def pohteri_vahtii():
+    print("Pohteri aloitti vahtimisen")
     vahdi = True
+
+    global PohteriVahdissa
+    PohteriVahdissa = True
 
     # Pidetään huolta että while looppi loppuu myös jos ohjelma lopetetaan
     global running
+
+
+    # Pyyhitään pois aijemmat saapuneet sanat kun vahti ei vahtinut
+    # pohjoisen_sanat = []
 
     # Lopettaa vahtimisen jos tulee 10 erilaista sanaa
     while vahdi == True and running == True:
@@ -152,10 +164,17 @@ def pohteri_vahtii():
         time.sleep(1)
 
 def eteteri_vahtii():
+    print("Eteteri aloitti vahtimisen")
     vahdi = True
+
+    global EteteriVahdissa
+    EteteriVahdissa = True
 
     # Pidetään huolta että while looppi loppuu myös jos ohjelma lopetetaan
     global running
+
+    # Pyyhitään pois aijemmat saapuneet sanat kun vahti ei vahtinut
+    # etelan_sanat = []
 
     # Lopettaa vahtimisen jos tulee 10 erilaista sanaa tai ohjelma lopetetaan
     while vahdi == True and running == True:
@@ -170,6 +189,8 @@ def eteteri_vahtii():
 # Main game loop
 def main():
     global running
+    global EteteriVahdissa
+    global PohteriVahdissa
     while running:
         for event in pygame.event.get():
 
@@ -184,19 +205,19 @@ def main():
                     threading.Thread(target=move_monkey, args=(ErnestiApina, valimatka)).start()
                 
                 if ErnestiApinanappi10.button_rect.collidepoint(mouse_pos):
-                    threading.Thread(target=send_10_monkeys, args=(ErnestinApinat, valimatka)).start()
+                    threading.Thread(target=send_10_monkeys, args=(ErnestinApinat, valimatka, PohteriVahdissa)).start()
 
 
                 if KernestiApinanappi10.button_rect.collidepoint(mouse_pos):
                     
-                    threading.Thread(target=send_10_monkeys, args=(KernestinApinat, valimatka)).start()
+                    threading.Thread(target=send_10_monkeys, args=(KernestinApinat, valimatka, EteteriVahdissa)).start()
 
                 if KernestiApinanappi.button_rect.collidepoint(mouse_pos):
                     # prints current location of mouse
                     threading.Thread(target=move_monkey, args=(KernestiApina, valimatka)).start()
 
                 if PohteriVahdiNappi.button_rect.collidepoint(mouse_pos):
-                    # prints current location of mouse
+
                     threading.Thread(target=pohteri_vahtii).start()
 
                 if EteteriVahdiNappi.button_rect.collidepoint(mouse_pos):

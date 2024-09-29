@@ -17,7 +17,7 @@ class Monkey():
 
         self.apina_mantereella = False
         self.apina_elossa = True
-        
+
         
         self.saapuneet_sanat = saapuneet_sanat
 
@@ -34,7 +34,7 @@ class Monkey():
         self.apina_mantereella = False
         self.rect.x, self.rect.y = self.start_location
 
-    def liikuMantereelle(self, valimatka):
+    def liikuMantereelle(self, valimatka, vastaanottajavahdissa=False):
         self.omistaja.lahetetyt_apinat += 1
 
         kilometri = valimatka / 100  # Lasketaan yhden kilometrin määrä näytöllä
@@ -56,18 +56,19 @@ class Monkey():
             apinan_mahikset= random.randint(1, 200)
 
             if apinan_mahikset == 50:
-                print("Apina kuoli!")
+                # print("Apina kuoli!")
                 self.apina_elossa = False
                 return
 
         if self.apina_elossa == True:
-            print("Apina pääsi maihin!")
+            # print("Apina pääsi maihin!")
             self.omistaja.apinat_perilla += 1
             self.apina_mantereella = True
 
             # Päivitetään sanalistaa mitä mantereelle on päässyt
-            if self.saapuneet_sanat is not None and self.text not in self.saapuneet_sanat:
+            if self.saapuneet_sanat is not None and self.text not in self.saapuneet_sanat and vastaanottajavahdissa:
                 self.saapuneet_sanat.append(self.text)
+                print("Lisättiin sana saapuneisin")
 
         else:
             print("Hai söi apinan")
