@@ -15,7 +15,7 @@ pygame.init()
 # Set up the window
 WIDTH, HEIGHT = 1000, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("My Game")
+pygame.display.set_caption("Ernest & Kernest Monkey Genocide")
 
 # Define some colors
 WHITE = (255, 255, 255)
@@ -46,7 +46,7 @@ def update_screen():
     Ernesti.draw(screen)
     Kernesti.draw(screen)
 
-    # Muiden luotujen apinoiden piirtäminen
+    # Dynaamisesti luotujen apinoiden piirtäminen
     for monkey in ErnestinApinat.values():
         monkey.draw(screen)
 
@@ -66,10 +66,7 @@ Mantere = Place(image_file = "./assets/mantere.png", width = 250, height = 400 ,
 
 # Ernesti ja sen apinat
 Ernesti = Person(image_file = "./assets/erne.png", width = 50, height = 75, location = [Saari.rect.right-65, Saari.rect.top + 85])
-
-ErnestinApinoidenStart  = [Ernesti.rect.centerx+10, Ernesti.rect.top]
-ErnestiApina = Monkey(location = ErnestinApinoidenStart, screen=screen, omistaja=Ernesti)
-
+ErnestiApina = Monkey(screen=screen, omistaja=Ernesti)
 ErnestiApinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+10,25,'Ernesti Apina')
 ErnestiApinanappi10 = Button(BLACK, ErnestiApinanappi.button_rect.right+10,Meri.rect.bottom+10,25,'10x')
 
@@ -77,10 +74,7 @@ ErnestiApinanappi10 = Button(BLACK, ErnestiApinanappi.button_rect.right+10,Meri.
 
 # Kernesti ja sen apinat
 Kernesti = Person(image_file = "./assets/kerne.png", width = 50, height = 75, location = [Saari.rect.right-65, Saari.rect.bottom - 85])
-
-KernestinApinoidenStart  = [Kernesti.rect.centerx+10, Kernesti.rect.top]
-KernestiApina = Monkey(location=KernestinApinoidenStart, screen=screen, omistaja=Kernesti)
- 
+KernestiApina = Monkey(screen=screen, omistaja=Kernesti)
 KernestiApinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+60,25,'Kernesti Apina')
 KernestiApinanappi10 = Button(BLACK, KernestiApinanappi.button_rect.right+10,Meri.rect.bottom+60,25,'10x')
 
@@ -90,18 +84,18 @@ valimatka = (Mantere.rect.left)-Saari.rect.right
 hatasanoma_list = ["Tulee", "ärpeegeetä", "tuuksie", "helppaa", "huomen", "vai", "tänää", "v**tu", "mie", "kuolen"]
 
 # Luodaan apinat dynaamiseesti niin että hätäsanoma sisällytetään olioon
-def teach_10_monkeys(start=[], owner=Person):
+def teach_10_monkeys(owner=Person):
     monkeys = {}
 
     for i in range(10):
         sana = hatasanoma_list[i]  # Haetaan hatasanomasta yksi sana
-        monkeys[f"monkey_{i+1}"] = Monkey(location=start, screen=screen , sana=sana, omistaja=owner)  # Luo apina ja talleta muide joukkoon
+        monkeys[f"monkey_{i+1}"] = Monkey(screen=screen , sana=sana, omistaja=owner)  # Luo apina ja talleta muide joukkoon
 
     return monkeys
 
 
-ErnestinApinat = teach_10_monkeys(ErnestinApinoidenStart, Ernesti)
-KernestinApinat = teach_10_monkeys(KernestinApinoidenStart, Kernesti)
+ErnestinApinat = teach_10_monkeys(Ernesti)
+KernestinApinat = teach_10_monkeys(Kernesti)
 
 
 def send_10_monkeys(monkeys,distance):

@@ -3,19 +3,22 @@ import time
 import random
 
 class Monkey():
-    def __init__(self, location, screen, omistaja ,sana=""):
+    def __init__(self, screen, omistaja ,sana=""):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("./assets/apina.png")
         self.resized_image = pygame.transform.scale(self.image,(50, 75))
         self.screen = screen
         self.rect = self.resized_image.get_rect()
-        self.start_location = location
-        self.rect.x, self.rect.y = self.start_location
 
+        # Aloituspaikka omistajan vieressä
         self.omistaja = omistaja
+        self.start_location = [self.omistaja.rect.centerx+10,self.omistaja.rect.top]
+        self.rect.x, self.rect.y = self.start_location
 
         self.apina_mantereella = False
         self.apina_elossa = True
+
+        # KernestinApinoidenStart  = [Kernesti.rect.centerx+10, Kernesti.rect.top]
 
         # Hätäviestin sana apinalle näkymään
         self.text = sana
