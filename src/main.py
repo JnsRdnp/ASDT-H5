@@ -8,6 +8,7 @@ from person import Person
 from monkey import Monkey
 from button import Button
 from ship import Ship
+from celebration import Celebration
 
 
 # Initialize Pygame
@@ -28,6 +29,9 @@ clock = pygame.time.Clock()
 running = True
 
 screen_needs_update = False
+
+ErnestiJuhlii = False
+KernestiJuhlii = False
 
 def update_screen():
 
@@ -64,7 +68,17 @@ def update_screen():
     for monkey in KernestinApinat.values():
         monkey.draw(screen)
 
-    # Update the display
+    # Julhien piirto
+    global ErnestiJuhlii
+    global KernestiJuhlii
+
+    if ErnestiJuhlii:
+        ErnestinPirskeet.draw(screen)
+
+    if KernestiJuhlii:
+        KernestinPirskeet.draw(screen)
+
+    # Update the displays
     pygame.display.flip()
 
     clock.tick(60)
@@ -99,6 +113,10 @@ EteteriVahdissa = False
 # Laivat
 PohterinLaiva = Ship(screen=screen, omistaja=Pohteri)
 EteterinLaiva = Ship(screen=screen, omistaja=Eteteri)
+
+# Pirskeet
+ErnestinPirskeet = Celebration("Ernestin ",Ernesti, 30)
+KernestinPirskeet = Celebration("Kernestin ",Kernesti, 30)
 
 
 # Mantereen ja saaren välimatka
@@ -145,6 +163,7 @@ def pohteri_vahtii():
 
     global PohteriVahdissa
     PohteriVahdissa = True
+    global ErnestiJuhlii
 
     # Pidetään huolta että while looppi loppuu myös jos ohjelma lopetetaan
     global running
@@ -159,6 +178,9 @@ def pohteri_vahtii():
             #Iloitaan vain jos ollaan ensimmäisiä
             if Kernesti.iloitsee == False:
                 Ernesti.iloitsee=True
+
+            ErnestiJuhlii = True
+                
         time.sleep(1)
 
 def eteteri_vahtii():
@@ -171,12 +193,16 @@ def eteteri_vahtii():
     # Pidetään huolta että while looppi loppuu myös jos ohjelma lopetetaan
     global running
 
+    global KernestiJuhlii
+
     # Lopettaa vahtimisen jos tulee 10 erilaista sanaa tai ohjelma lopetetaan
     while vahdi == True and running == True:
         vahdi = Eteteri.vahdi(etelan_sanat)
         
         if vahdi==False:
             EteterinLaiva.liikuSaarelle(valimatka=valimatka)
+
+            KernestiJuhlii = True
             # Iloitaan vain jos ollaan ensimmäisiä
             if Ernesti.iloitsee == False:
                 Kernesti.iloitsee=True
