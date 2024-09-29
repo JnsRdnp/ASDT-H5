@@ -12,14 +12,14 @@ class Person(pygame.sprite.Sprite):
         self.rect = self.resized_image.get_rect()
         self.rect.x, self.rect.y = location
         self.satamavahti = satamavahti
+
         if satamavahti == False:
             self.lahetetyt_apinat = 0
             self.apinat_perilla = 0
 
+        if satamavahti == True:
+            self.vastaanotetut_sanat = []
 
-                # Hätäviestin sana apinalle näkymään
-
-        # self.rect.left, self.rect.top = 
 
     def draw(self,screen):
         if self.satamavahti == False:
@@ -34,3 +34,11 @@ class Person(pygame.sprite.Sprite):
 
         screen.blit(self.resized_image, self.rect)
         
+    def vahdi(self, saapuneet_sanat):
+        vahdi = True
+        while vahdi == True:
+            print("Lisätään sana listaan jos uusi")
+            if len(saapuneet_sanat) > 9:
+                print("Tässähän on hätä viesti!")
+
+    

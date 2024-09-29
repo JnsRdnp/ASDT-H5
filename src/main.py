@@ -73,8 +73,6 @@ ErnestiApina = Monkey(screen=screen, omistaja=Ernesti)
 ErnestiApinanappi = Button(BLACK,Meri.rect.left+40,Meri.rect.bottom+10,25,'Ernesti Apina')
 ErnestiApinanappi10 = Button(BLACK, ErnestiApinanappi.button_rect.right+10,Meri.rect.bottom+10,25,'10x')
 
-
-
 # Kernesti ja sen apinat
 Kernesti = Person(image_file = "./assets/kerne.png", width = 50, height = 75, location = [Saari.rect.right-65, Saari.rect.bottom - 85])
 KernestiApina = Monkey(screen=screen, omistaja=Kernesti)
@@ -84,8 +82,6 @@ KernestiApinanappi10 = Button(BLACK, KernestiApinanappi.button_rect.right+10,Mer
 # Pohteri ja eteteri
 Pohteri = Person(image_file = "./assets/pohteri.png", width = 60, height = 85, location = [Mantere.rect.centerx-45, Mantere.rect.top + 85], satamavahti=True)
 Eteteri = Person(image_file = "./assets/eteteri.png", width = 60, height = 85, location = [Mantere.rect.centerx-50, Mantere.rect.bottom - 95], satamavahti=True)
-
-
 
 # Mantereen ja saaren välimatka
 valimatka = (Mantere.rect.left)-Saari.rect.right
@@ -123,6 +119,15 @@ def move_monkey(monkey, distance):
     monkey.reset_monkey()
     monkey.liikuMantereelle(valimatka=distance)
 
+pohjoisen_sanat  = []
+def paivita_pohj_saapuneita_sanoja(sana):
+    if sana not in pohjoisen_sanat:
+        pohjoisen_sanat.append(sana)
+
+etelan_sanat = []
+def paivita_etel_saapuneita_sanoja(sana):
+    if sana not in etelan_sanat:
+        etelan_sanat.append(sana)
 
 # Main game loop
 def main():
