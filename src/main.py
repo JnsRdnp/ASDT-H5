@@ -24,6 +24,8 @@ BLACK = (0, 0, 0)
 # Set up the clock for controlling frame rate
 clock = pygame.time.Clock()
 
+running = True
+
 screen_needs_update = False
 
 def update_screen():
@@ -130,15 +132,19 @@ def move_monkey(monkey, distance):
 
 def pohteri_vahtii():
     vahdi = True
+
+    # Pidetään huolta että while looppi loppuu myös jos ohjelma lopetetaan
+    global running
+
     # Lopettaa vahtimisen jos tulee 10 erilaista sanaa
-    while vahdi == True:
+    while vahdi == True and running == True:
         vahdi = Pohteri.vahdi(pohjoisen_sanat)
         time.sleep(1)
 
 
 # Main game loop
 def main():
-    running = True
+    global running
     while running:
         for event in pygame.event.get():
 
