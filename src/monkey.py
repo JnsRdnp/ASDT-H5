@@ -12,6 +12,12 @@ class Monkey():
         self.screen = screen
         self.rect = self.resized_image.get_rect()
 
+        # Hai kuva kuolemista varteen
+        self.sharkimage = pygame.image.load("./assets/shark.png")
+        self.resized_sharkimage = pygame.transform.scale(self.sharkimage,(50, 75))
+        self.shark_rect = self.resized_sharkimage.get_rect()
+        self.shark_rect.x, self.shark_rect.y = [100, 100]
+
         # Aloituspaikka omistajan vieressä
         self.omistaja = omistaja
         self.start_location = [self.omistaja.rect.centerx+10,self.omistaja.rect.top]
@@ -63,7 +69,6 @@ class Monkey():
 
             time.sleep(0.05)
             # https://docs.python.org/3/library/random.html
-            # Prosentin mahdollisuus jokaisella kilometrillä kuolla
             apinan_mahikset= random.randint(1, 200)
 
             if apinan_mahikset == 50:
@@ -84,15 +89,20 @@ class Monkey():
                 print("Lisättiin sana saapuneisin")
 
         else:
-            pygame.mixer.Channel(2).play(pygame.mixer.Sound(self.chomp_sound), maxtime=2000)
+            # Tämä ääni ei jostain syystä toimi
+            self.apina_elossa = False
+            pygame.mixer.Channel(2).play(pygame.mixer.Sound(self.chomp_sound), maxtime=3000)
             print("Hai söi apinan")
         
         # Syntyy uudestaan saarella
         
-        
-        
-
 
     def draw(self,screen):
-        self.screen.blit(self.resized_image, self.rect)
-        screen.blit(self.text_surface, (self.rect.left, self.rect.bottom+5))
+
+        if self.apina_elossa == True:
+            screen.blit(self.resized_image, self.rect)
+            screen.blit(self.text_surface, (self.rect.left, self.rect.bottom+5))
+        else:
+            self.shark_rect.x, self.shark_rect.y = self.rect.x, self.rect.y
+            screen.blit(self.resized_sharkimage, self.shark_rect)
+            screen.blit(self.text_surface, (self.rect.left, self.rect.bottom+5))
