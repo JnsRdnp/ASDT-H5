@@ -3,7 +3,7 @@ import time
 import random
 
 class Monkey():
-    def __init__(self, location, screen, sana=""):
+    def __init__(self, location, screen, omistaja ,sana=""):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("./assets/apina.png")
         self.resized_image = pygame.transform.scale(self.image,(50, 75))
@@ -12,6 +12,7 @@ class Monkey():
         self.start_location = location
         self.rect.x, self.rect.y = self.start_location
 
+        self.omistaja = omistaja
 
         self.apina_mantereella = False
         self.apina_elossa = True
@@ -20,16 +21,16 @@ class Monkey():
         self.text = sana
         self.my_font = pygame.font.SysFont('Comic Sans MS', 17)
         self.text_surface = self.my_font.render(self.text, False, (0, 0, 0))
-        
+
     def reset_monkey(self):
         self.apina_elossa = True
         self.apina_mantereella = False
         self.rect.x, self.rect.y = self.start_location
 
     def liikuMantereelle(self, valimatka):
+        self.omistaja.lahetetyt_apinat += 1
 
         kilometri = valimatka / 100  # Lasketaan yhden kilometrin määrä näytöllä
-        
 
         for step in range(100):
             self.rect.x += kilometri  # Liikutaan yksi kilometri kerallaan sata kertaa
@@ -54,6 +55,7 @@ class Monkey():
 
         if self.apina_elossa == True :
              print("Apina pääsi maihin!")
+             self.omistaja.apinat_perilla += 1
              self.apina_mantereella = True
         else :
             print("Hai söi apinan")
