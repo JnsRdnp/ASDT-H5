@@ -10,7 +10,6 @@ from button import Button
 from ship import Ship
 from celebration import Celebration
 
-
 # Initialize Pygame
 pygame.init()
 

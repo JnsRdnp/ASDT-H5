@@ -2,6 +2,8 @@ import pygame
 import time
 import random
 
+# monta ääntä päällekäin https://stackoverflow.com/questions/53617967/play-music-and-sound-effects-on-top-of-each-other-pygame
+
 class Monkey():
     def __init__(self, screen, omistaja ,sana="", saapuneet_sanat=None):
         pygame.sprite.Sprite.__init__(self)
@@ -21,13 +23,16 @@ class Monkey():
         
         self.saapuneet_sanat = saapuneet_sanat
 
-
-        # KernestinApinoidenStart  = [Kernesti.rect.centerx+10, Kernesti.rect.top]
-
         # Hätäviestin sana apinalle näkymään
         self.text = sana
         self.my_font = pygame.font.SysFont('Comic Sans MS', 17)
         self.text_surface = self.my_font.render(self.text, False, (0, 0, 0))
+
+        pygame.mixer.init()
+
+        self.splash_sound = pygame.mixer.Sound("./assets/splash.wav")
+        self.success_sound = pygame.mixer.Sound("./assets/success.wav")
+        self.chomp_sound = pygame.mixer.Sound("./assets/chomp.wav")
 
     def reset_monkey(self):
         self.apina_elossa = True
@@ -39,7 +44,13 @@ class Monkey():
 
         kilometri = valimatka / 100  # Lasketaan yhden kilometrin määrä näytöllä
 
+
+
         for step in range(100):
+
+            pygame.mixer.Sound.play(self.splash_sound)
+
+
             self.rect.x += kilometri  # Liikutaan yksi kilometri kerallaan sata kertaa
             
             # print(step)
@@ -65,12 +76,15 @@ class Monkey():
             self.omistaja.apinat_perilla += 1
             self.apina_mantereella = True
 
+            pygame.mixer.Channel(1).play(pygame.mixer.Sound(self.success_sound), maxtime=1000)
+
             # Päivitetään sanalistaa mitä mantereelle on päässyt
             if self.saapuneet_sanat is not None and self.text not in self.saapuneet_sanat and vastaanottajavahdissa:
                 self.saapuneet_sanat.append(self.text)
                 print("Lisättiin sana saapuneisin")
 
         else:
+            pygame.mixer.Channel(2).play(pygame.mixer.Sound(self.chomp_sound), maxtime=2000)
             print("Hai söi apinan")
         
         # Syntyy uudestaan saarella
