@@ -4,6 +4,7 @@ import pygame
 # -> https://stackoverflow.com/questions/62804292/how-to-set-the-position-of-an-image-in-pygame
 
 class Person(pygame.sprite.Sprite):
+
     def __init__(self, image_file, width, height , location, satamavahti=False):
         pygame.sprite.Sprite.__init__(self)  #call Sprite initializer
         self.image = pygame.image.load(image_file)
@@ -21,6 +22,8 @@ class Person(pygame.sprite.Sprite):
             self.vastaanotetut_sanat = []
             self.vahtii = False
 
+        self.iloitsee = False
+
         
 
 
@@ -30,10 +33,19 @@ class Person(pygame.sprite.Sprite):
             if self.lahetetyt_apinat != 0:
                 # desimaalien määrä https://stackoverflow.com/questions/20457038/how-to-round-to-2-decimals-with-python
                 self.apinaprosentti = round(((self.apinat_perilla / self.lahetetyt_apinat)*100),2)
-            self.my_font = pygame.font.SysFont('Comic Sans MS', 17)
-            self.text_surface = self.my_font.render(f"{self.apinat_perilla} / {self.lahetetyt_apinat} ({self.apinaprosentti} %)", False, (255, 0, 0))
 
-            screen.blit(self.text_surface, (self.rect.left, self.rect.top-27))
+
+            if self.iloitsee==True:
+                self.my_font = pygame.font.SysFont('Comic Sans MS', 17)
+                self.text_surface = self.my_font.render(f"JEE MINÄ VOITIN!!!", False, (255, 0, 0))
+
+                screen.blit(self.text_surface, (self.rect.left, self.rect.top-27))
+
+            else:
+                self.my_font = pygame.font.SysFont('Comic Sans MS', 17)
+                self.text_surface = self.my_font.render(f"{self.apinat_perilla} / {self.lahetetyt_apinat} ({self.apinaprosentti} %)", False, (255, 0, 0))
+
+                screen.blit(self.text_surface, (self.rect.left, self.rect.top-27))
 
         # Piirretään uniikit määrät vain jos vahtii
         elif (self.vahtii == True):
@@ -53,5 +65,6 @@ class Person(pygame.sprite.Sprite):
             # Lopetetaan vahtiminen jos 10 sanaa tullut
             return False
         return True
+    
 
     

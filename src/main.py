@@ -64,8 +64,6 @@ def update_screen():
     for monkey in KernestinApinat.values():
         monkey.draw(screen)
 
-    print("Pohjoisen sanat: ", pohjoisen_sanat)
-
     # Update the display
     pygame.display.flip()
 
@@ -101,7 +99,6 @@ EteteriVahdissa = False
 # Laivat
 PohterinLaiva = Ship(screen=screen, omistaja=Pohteri)
 EteterinLaiva = Ship(screen=screen, omistaja=Eteteri)
-
 
 
 # Mantereen ja saaren välimatka
@@ -161,6 +158,8 @@ def pohteri_vahtii():
         vahdi = Pohteri.vahdi(pohjoisen_sanat)
         if vahdi==False:
             PohterinLaiva.liikuSaarelle(valimatka=valimatka)
+            if Kernesti.iloitsee == False:
+                Ernesti.iloitsee=True
         time.sleep(1)
 
 def eteteri_vahtii():
@@ -182,6 +181,9 @@ def eteteri_vahtii():
         
         if vahdi==False:
             EteterinLaiva.liikuSaarelle(valimatka=valimatka)
+            if Ernesti.iloitsee == False:
+                Kernesti.iloitsee=True
+
         time.sleep(1)
     
 
