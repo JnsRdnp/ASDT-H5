@@ -35,12 +35,11 @@ class Person(pygame.sprite.Sprite):
             self.my_font = pygame.font.SysFont('Comic Sans MS', 17)
             self.text_surface = self.my_font.render(f"Uniikkeja sanoja: {len(saapuneet_sanat)}", False, (255, 0, 0))
 
-            screen.blit(self.text_surface, (self.rect.left, self.rect.top-27))
+            screen.blit(self.text_surface, (self.rect.left-20, self.rect.top-27))
 
         screen.blit(self.resized_image, self.rect)
         
     def vahdi(self, saapuneet_sanat):
-        print(saapuneet_sanat)
         if len(saapuneet_sanat) > 9:
             print("Tässähän on hätäviesti!")
             # Lopetetaan vahtiminen jos 10 sanaa tullut

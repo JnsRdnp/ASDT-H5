@@ -141,6 +141,17 @@ def pohteri_vahtii():
         vahdi = Pohteri.vahdi(pohjoisen_sanat)
         time.sleep(1)
 
+def eteteri_vahtii():
+    vahdi = True
+
+    # Pidetään huolta että while looppi loppuu myös jos ohjelma lopetetaan
+    global running
+
+    # Lopettaa vahtimisen jos tulee 10 erilaista sanaa tai ohjelma lopetetaan
+    while vahdi == True and running == True:
+        vahdi = Eteteri.vahdi(etelan_sanat)
+        time.sleep(1)
+
 
 # Main game loop
 def main():
@@ -173,6 +184,10 @@ def main():
                 if PohteriVahdiNappi.button_rect.collidepoint(mouse_pos):
                     # prints current location of mouse
                     threading.Thread(target=pohteri_vahtii).start()
+
+                if EteteriVahdiNappi.button_rect.collidepoint(mouse_pos):
+                    # prints current location of mouse
+                    threading.Thread(target=eteteri_vahtii).start()
 
 
                 
