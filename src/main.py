@@ -28,8 +28,6 @@ clock = pygame.time.Clock()
 
 running = True
 
-screen_needs_update = False
-
 ErnestiJuhlii = False
 KernestiJuhlii = False
 
